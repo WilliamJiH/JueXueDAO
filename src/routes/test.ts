@@ -1,5 +1,6 @@
-const express = require('express')
-const router = express.Router()
+import { Router } from 'express'
+
+const router = Router()
 
 router.get('/test', (req, res, next) => {
   const data = {
@@ -17,4 +18,4 @@ router.get('/error', (req, res, next) => {
   throw new Error('Demo error')
 })
 
-module.exports = router
+export default router

@@ -1,13 +1,13 @@
 /* This module will hold our connection to
    our mongo server through the Mongoose API.
    We will access the connection in our express server. */
-const mongoose = require('mongoose')
-const config = require('../../configs/index')
+import mongoose from 'mongoose'
+import configs from '../../configs/index'
 
 /* Connnect to our database */
-const mongoURI = config.databaseUri
+const mongoURI = configs.databaseUri
 mongoose
-  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(mongoURI)
   .then(() => {
     console.log('Connected to database.', mongoURI)
   })
@@ -16,4 +16,4 @@ mongoose
     console.error('Error connecting to mongodb. Timeout reached.')
   })
 
-module.exports = { mongoose } // Export the active connection.
+export default mongoose
