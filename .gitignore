@@ -1,4 +1,4 @@
-.env.*.local
+.env.local
 node_modules/
 package-lock.json
 .vscode/

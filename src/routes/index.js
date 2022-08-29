@@ -1,9 +1,3 @@
-var express = require('express')
-var router = express.Router()
-
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  res.send('hello')
-})
-
-module.exports = router
+module.exports.registerRoutes = (app) => {
+  app.use('/api', require('./test'))
+}
