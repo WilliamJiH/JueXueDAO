@@ -1,7 +1,8 @@
-import { WebResponse } from '@src/types/web.type'
+import { WebResponse } from '@src/types/web.types'
 import { Request, Response, NextFunction } from 'express'
 
 const OK_STATUS_CODE = 200
+
 export const responseInterceptor = (
   req: Request,
   res: Response,
