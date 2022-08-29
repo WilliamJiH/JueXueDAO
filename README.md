@@ -5,14 +5,26 @@
 ### Setup Environment
 
 - Node
+- yarn
 - MongoDB
+
+### Using Yarn
+
+<https://stackoverflow.com/questions/62898770/how-do-i-switch-from-npm-to-yarn-in-my-project>
+
+```sh
+# On Windows PowerShell
+# As Administrator
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
+yarn
+```
 
 ### Run in Development Environment
 
 ```sh
-npm run dev
+yarn run dev
 ```
 
 ### Development Tips
 
-- Install `prettier`.
+- Install `prettier`, enable "Format on Save".
