@@ -3,20 +3,16 @@ import express from 'express'
 import cors from 'cors'
 import logger from 'morgan'
 import path from 'path'
+import cookieParser from 'cookie-parser'
 
 // mongoose and mongo connection
 import mongoose from './db/mongoose'
 
 import { responseInterceptor } from './middlewares/response.interceptor'
 import { errorHandler } from './middlewares/error-handler.interceptor'
-import testRouter from './routes/test'
 
-// app
-// app.use(logger('dev'))
-// app.use(express.json())
-// app.use(express.urlencoded({ extended: false }))
-// app.use(cookieParser())
-// app.use(express.static(path.join(__dirname, 'public')))
+// Import routers
+import testRouter from './routes/test'
 
 class App {
   public server
@@ -35,9 +31,11 @@ class App {
   }
 
   preprocessMiddlewares() {
-    this.server.use(express.json())
     this.server.use(cors())
     this.server.use(logger('dev'))
+    this.server.use(express.json())
+    this.server.use(cookieParser())
+    this.server.use(express.urlencoded({ extended: false }))
     this.server.use(express.static(path.join(__dirname, 'public')))
   }
 
@@ -47,7 +45,6 @@ class App {
   }
 
   routes() {
-    // registerRoutes(this.server)
     this.server.use('/api', testRouter)
   }
 }

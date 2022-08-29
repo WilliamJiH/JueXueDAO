@@ -1,4 +1,4 @@
-import { WebResponse } from '@src/types/web.types'
+import { WebResponse } from '../types/web.types'
 import { Request, Response, NextFunction } from 'express'
 
 const OK_STATUS_CODE = 200
