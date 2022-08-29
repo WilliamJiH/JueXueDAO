@@ -9,7 +9,7 @@ router.get('/test', (req, res, next) => {
     reqQuery: req.query,
   }
 
-  res.data = data
+  res.locals.data = data
   next()
 })
 
