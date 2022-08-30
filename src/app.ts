@@ -15,6 +15,7 @@ import { errorHandler } from './middlewares/error-handler.interceptor'
 
 // Import routers
 import testRouter from './routes/test'
+import assetRouter from './routes/asset.api'
 
 class App {
   public server
@@ -36,6 +37,7 @@ class App {
     this.server.use(
       fileUpload({
         createParentPath: true,
+        limits: { fileSize: 30 * 1024 * 1024 },
       })
     )
 
@@ -55,6 +57,7 @@ class App {
 
   routes() {
     this.server.use('/api', testRouter)
+    this.server.use('/api', assetRouter)
   }
 }
 

@@ -28,3 +28,11 @@ yarn run dev
 ### Development Tips
 
 - Install `prettier`, enable "Format on Save".
+
+#### Port in use
+
+```PowerShell
+# Windows
+netstat -ano | findstr 3000
+taskkill /F /PID 4176
+```

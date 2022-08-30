@@ -6,36 +6,38 @@ import mime from 'mime'
 import configs from '../../configs'
 import path from 'path'
 import fs from 'fs'
-import { PublicationMetadata } from '@src/types/publication.types'
+import { PublicationMetadata } from '../types/publication.types'
+
+export type NFTProperties = PublicationMetadata
 
 export interface NFTMetadata {
   name: string
   description: string
-  properties: PublicationMetadata
+  properties: NFTProperties
 }
 
-/**
- * A helper to read a file from a location on disk and return a File object.
- * Note that this reads the entire file into memory and should not be used for
- * very large files.
- * @param {string} filePath the path to a file to store
- * @returns {File} a File object containing the file content
- */
-async function getFileFromPath(filePath: string): Promise<File> {
-  const content = await fs.promises.readFile(filePath)
-  const type = mime.getType(filePath)
-  return new File([content], path.basename(filePath), { type })
-}
-
-class NftStorage {
+export class NftStorage {
   #api: NFTStorage
 
   constructor(apiKey: string) {
     this.#api = new NFTStorage({ token: apiKey })
   }
 
-  set api(apiKey: string) {
+  set apiKey(apiKey: string) {
     this.#api = new NFTStorage({ token: apiKey })
+  }
+
+  /**
+   * A helper to read a file from a location on disk and return a File object.
+   * Note that this reads the entire file into memory and should not be used for
+   * very large files.
+   * @param {string} filePath the path to a file to store
+   * @returns {File} a File object containing the file content
+   */
+  static async getFileFromPath(filePath: string): Promise<File> {
+    const content = await fs.promises.readFile(filePath)
+    const type = mime.getType(filePath)
+    return new File([content], path.basename(filePath), { type })
   }
 
   /**
@@ -44,7 +46,7 @@ class NftStorage {
    * @param {string} metadata the metadata for the NFT
    */
   async storeNFT(filePath: string, metadata: NFTMetadata) {
-    const image = await getFileFromPath(filePath)
+    const image = await NftStorage.getFileFromPath(filePath)
 
     const nft = {
       image,
@@ -58,4 +60,5 @@ class NftStorage {
   async retrieveNFT() {}
 }
 
-export default new NftStorage(configs.nftStorageApiKey)
+const NFTStorageAPI = new NftStorage(configs.nftStorageApiKey)
+export default NFTStorageAPI

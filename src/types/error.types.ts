@@ -1,7 +1,7 @@
 export class AppCustomError extends Error {
   statusCode: number
 
-  constructor(message: string, statusCode = 200) {
+  constructor(message?: string, statusCode = 200) {
     super(message)
     this.name = this.constructor.name
     this.statusCode = statusCode
@@ -28,6 +28,7 @@ export class NoPermissionException extends AuthenticationException {}
 
 /****  Resource Errors  ****/
 export class RequirementUnfulfilledException extends ServerException {}
+export class FileNotUploadedException extends ServerException {}
 export class UniquenessViolatedException extends ServerException {}
 export class InvalidValueException extends ServerException {}
 export class ResourceNotFoundException extends ServerException {}

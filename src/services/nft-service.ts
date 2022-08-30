@@ -1,5 +1,10 @@
-import NFTStorageAPI from '@src/db/nft-storage'
+import NFTStorageAPI, { NFTMetadata } from '../db/nft-storage'
+import { PublicationMetadata } from '../types/publication.types'
 
-class NFTService {}
+export class NFTService {
+  public async uploadPublicationPDF(filePath: string, metadata: NFTMetadata) {
+    const token = await NFTStorageAPI.storeNFT(filePath, metadata)
+  }
+}
 
 export default new NFTService()
