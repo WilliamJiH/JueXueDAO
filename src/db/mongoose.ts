@@ -2,7 +2,7 @@
    our mongo server through the Mongoose API.
    We will access the connection in our express server. */
 import mongoose from 'mongoose'
-import configs from '../configs/index'
+import configs from '../../configs/index'
 
 /* Connnect to our database */
 const mongoURI = configs.databaseUri
