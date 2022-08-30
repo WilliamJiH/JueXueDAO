@@ -5,6 +5,8 @@ import logger from 'morgan'
 import path from 'path'
 import cookieParser from 'cookie-parser'
 
+import fileUpload from 'express-fileupload'
+
 // mongoose and mongo connection
 import mongoose from './db/mongoose'
 
@@ -31,12 +33,19 @@ class App {
   }
 
   preprocessMiddlewares() {
+    this.server.use(
+      fileUpload({
+        createParentPath: true,
+      })
+    )
+
     this.server.use(cors())
-    this.server.use(logger('dev'))
     this.server.use(express.json())
-    this.server.use(cookieParser())
     this.server.use(express.urlencoded({ extended: false }))
+    this.server.use(cookieParser())
     this.server.use(express.static(path.join(__dirname, 'public')))
+
+    this.server.use(logger('dev'))
   }
 
   postprocessMiddlewares() {

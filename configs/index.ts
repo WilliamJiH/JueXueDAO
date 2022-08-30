@@ -11,4 +11,6 @@ export default {
   secretKey: process.env.SECRET_KEY || 'MY_SECRET_KEY',
   databaseUri:
     process.env.DATABASE_URI || 'mongodb://localhost:27017/juexue-dao-app',
+
+  nftStorageApiKey: process.env.NFT_STORAGE_API_KEY || '',
 }
