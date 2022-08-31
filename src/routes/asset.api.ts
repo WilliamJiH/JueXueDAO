@@ -1,4 +1,4 @@
-import assetController from '../controllers/asset-controller'
+import assetController from '@/controllers/asset-controller'
 import { Router } from 'express'
 
 const router = Router()

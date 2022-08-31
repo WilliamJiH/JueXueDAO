@@ -1,6 +1,7 @@
-import app from './app'
+import 'module-alias/register'
+import app from '@/app'
 
-import configs from '../configs'
+import configs from '@configs'
 
 const { appName, port } = configs
 

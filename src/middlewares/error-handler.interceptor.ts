@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { AppCustomError } from '../types/error.types'
+import { AppCustomError } from '@/types/error.types'
 
 const BAD_REQUEST_ERROR_STATUS_CODE = 400
 const INTERNAL_SERVER_ERROR_STATUS_CODE = 500

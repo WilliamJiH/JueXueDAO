@@ -1,0 +1,3 @@
+interface Asset {
+  type: 'nft'
+}

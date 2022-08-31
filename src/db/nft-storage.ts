@@ -3,7 +3,7 @@ import { NFTStorage, File, TokenType } from 'nft.storage'
 
 // The 'mime' npm package helps us set the correct file type on our File objects
 import mime from 'mime'
-import configs from '../../configs'
+import configs from '@configs'
 import path from 'path'
 import fs from 'fs'
 import { PublicationMetadata } from '../types/publication.types'

@@ -8,14 +8,15 @@ import cookieParser from 'cookie-parser'
 import fileUpload from 'express-fileupload'
 
 // mongoose and mongo connection
-import mongoose from './db/mongoose'
+import mongoose from '@/db/mongoose'
 
-import { responseInterceptor } from './middlewares/response.interceptor'
-import { errorHandler } from './middlewares/error-handler.interceptor'
+import { responseInterceptor } from '@/middlewares/response.interceptor'
+import { errorHandler } from '@/middlewares/error-handler.interceptor'
 
 // Import routers
-import testRouter from './routes/test'
-import assetRouter from './routes/asset.api'
+import testRouter from '@/routes/test'
+import assetRouter from '@/routes/asset.api'
+import { FileNotUploadedException } from '@/types/error.types'
 
 class App {
   public server
@@ -38,6 +39,9 @@ class App {
       fileUpload({
         createParentPath: true,
         limits: { fileSize: 30 * 1024 * 1024 },
+        limitHandler: (req, res, next) => {
+          throw new FileNotUploadedException('File exceeded size limit.')
+        },
       })
     )
 
