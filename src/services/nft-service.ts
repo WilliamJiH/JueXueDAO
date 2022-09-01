@@ -1,8 +1,11 @@
-import NFTStorageAPI, { NFTMetadata } from '@/db/nft-storage'
+import NFTStorageAPI, { INFTMetadata, INftStorageToken } from '@/db/nft-storage'
 
 export class NFTService {
-  public async uploadPublicationPDF(filePath: string, metadata: NFTMetadata) {
-    const token = await NFTStorageAPI.storeNFT(filePath, metadata)
+  public async uploadPublicationPDF(filePath: string, metadata: INFTMetadata) {
+    const token: INftStorageToken = await NFTStorageAPI.storeNFT(
+      filePath,
+      metadata
+    )
     return token
   }
 }

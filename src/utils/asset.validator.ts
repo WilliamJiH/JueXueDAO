@@ -1,6 +1,6 @@
 import { InvalidValueException } from '@/types/error.types'
-import { NFTMetadata } from '@/db/nft-storage'
-import { PublicationMetadata } from '@/types/publication.types'
+import { INFTMetadata } from '@/db/nft-storage'
+import { IPublicationMetadata } from '@/types/publication.types'
 
 export const validatePublicationMetadata = (metadata?: object | string) => {
   if (!metadata) throw new InvalidValueException('Metadata is not given')

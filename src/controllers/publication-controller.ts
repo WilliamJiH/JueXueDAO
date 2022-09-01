@@ -7,7 +7,7 @@ import { NextFunction, Request, Response } from 'express'
 import { validatePublicationMetadata } from '@/utils/asset.validator'
 import { UploadedFile } from 'express-fileupload'
 import assetService, { AssetService } from '@/services/asset-service'
-import { NFTMetadata } from '@/db/nft-storage'
+import { INFTMetadata } from '@/db/nft-storage'
 import { Publication, PublicationModel } from '@/models/publication'
 import configs from '@configs'
 
@@ -59,7 +59,7 @@ export class PublicationController {
       const token = configs.useNftStorage
         ? await nftService.uploadPublicationPDF(
             filePath,
-            metadata as NFTMetadata
+            metadata as INFTMetadata
           )
         : {
             ipnft: configs.demoNftCID,

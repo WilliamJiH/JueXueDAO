@@ -6,11 +6,16 @@ import mime from 'mime'
 import configs from '@configs'
 import path from 'path'
 import fs from 'fs'
-import { PublicationMetadata } from '../types/publication.types'
+import { IPublicationMetadata } from '../types/publication.types'
 
-export type NFTProperties = PublicationMetadata
+export type NFTProperties = IPublicationMetadata
 
-export interface NFTMetadata {
+export interface INftStorageToken {
+  ipnft: string
+  url: string
+}
+
+export interface INFTMetadata {
   name: string
   description: string
   properties: NFTProperties
@@ -45,7 +50,7 @@ export class NftStorage {
    * @param {string} filePath the temporary path to an image file
    * @param {string} metadata the metadata for the NFT
    */
-  async storeNFT(filePath: string, metadata: NFTMetadata) {
+  async storeNFT(filePath: string, metadata: INFTMetadata) {
     const image = await NftStorage.getFileFromPath(filePath)
 
     const nft = {

@@ -1,23 +1,21 @@
 import mongoose from '@/db/mongoose'
-import { NFTMetadata } from '@/db/nft-storage'
 import {
-  Author,
-  Institution,
-  PublicationMetadata,
+  IAuthor,
+  IInstitution,
+  IPublicationAsset,
 } from '@/types/publication.types'
 import { Schema, model, Model, InferSchemaType } from 'mongoose'
 
-interface IPublication extends NFTMetadata {
-  properties: PublicationMetadata
-  nftToken: {
-    ipnft: string
-    url: string
-  }
-}
+export type PublicationModelType = Model<IPublicationAsset>
 
-type PublicationModelType = Model<IPublication>
+export const institutionSchema = new Schema<IInstitution>({
+  name: {
+    type: String,
+    required: true,
+  },
+})
 
-export const authorSchema = new Schema<Author>({
+export const authorSchema = new Schema<IAuthor>({
   name: {
     type: String,
     required: true,
@@ -25,16 +23,15 @@ export const authorSchema = new Schema<Author>({
   publicKey: {
     type: String,
   },
-})
-
-export const institutionSchema = new Schema<Institution>({
-  name: {
-    type: String,
-    required: true,
+  contacts: {
+    email: String,
+    phone: String,
+    address: String,
+    institution: institutionSchema,
   },
 })
 
-export const publicationSchema = new Schema<IPublication>({
+export const publicationSchema = new Schema<IPublicationAsset>({
   name: {
     type: String,
     required: true,
@@ -55,7 +52,7 @@ export const publicationSchema = new Schema<IPublication>({
   },
 })
 
-export const Publication = model<IPublication, PublicationModelType>(
+export const Publication = model<IPublicationAsset, PublicationModelType>(
   'Publication',
   publicationSchema
 )
