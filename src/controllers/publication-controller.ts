@@ -8,7 +8,7 @@ import { validatePublicationMetadata } from '@/utils/asset.validator'
 import { UploadedFile } from 'express-fileupload'
 import assetService, { AssetService } from '@/services/asset-service'
 import { NFTMetadata } from '@/db/nft-storage'
-import { Publication } from '@/models/publication'
+import { Publication, PublicationModel } from '@/models/publication'
 import configs from '@configs'
 
 const PUBLICATION_FILE_UPLOAD_NAME = 'publicationFile'
@@ -56,18 +56,19 @@ export class PublicationController {
 
     try {
       // Send to NFTService
-      console.log({ useNft: configs.useNftStorage === true })
-      const token =
-        // configs.useNftStorage
-        //? await nftService.uploadPublicationPDF(filePath, metadata as NFTMetadata):
-        {
-          ipnft: configs.demoNftCID,
-          url: configs.demoNftURL,
-        }
+      const token = configs.useNftStorage
+        ? await nftService.uploadPublicationPDF(
+            filePath,
+            metadata as NFTMetadata
+          )
+        : {
+            ipnft: configs.demoNftCID,
+            url: configs.demoNftURL,
+          }
 
       // Store an entry to centralized DB
-      const publicationEntryData = { ...metadata, nftToken: token }
-      const databaseEntry = await Publication.create(publicationEntryData)
+      const publicationData: PublicationModel = { ...metadata, nftToken: token }
+      const databaseEntry = await Publication.create(publicationData)
 
       // Return token
       res.locals.data = { metadata, token, databaseEntry }
