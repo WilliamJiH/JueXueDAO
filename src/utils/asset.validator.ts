@@ -1,5 +1,5 @@
 import { PublicationMetadata } from '@/types/publication.types'
 
-export const validatePublicationMetadata = (metadata: any) => {
+export const validatePublicationMetadata = (metadata: object) => {
   return true
 }

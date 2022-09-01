@@ -6,7 +6,11 @@
   "scripts": {
     "build": "tsc --project ./",
     "start": "node ./dist/src/index.js",
-    "dev": "nodemon ./src/index.ts"
+    "build-run": "tsc --project ./ && yarn run dev",
+    "watch": "nodemon -e ts -w ./src -x yarn run start:ts",
+    "dev": "nodemon ./src/index.ts",
+    "start:ts": "ts-node src/index.ts",
+    "clean": "rmdir -r dist"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -14,6 +18,7 @@
     "debug": "~2.6.9",
     "dotenv": "^16.0.1",
     "express": "~4.16.1",
+    "express-async-errors": "^3.1.1",
     "express-fileupload": "^1.4.0",
     "fs": "^0.0.1-security",
     "http-errors": "~1.6.3",
