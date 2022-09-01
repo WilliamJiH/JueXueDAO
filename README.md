@@ -22,7 +22,7 @@ yarn
 ### Run in Development Environment
 
 ```sh
-yarn run dev
+yarn build-run
 ```
 
 ### Development Tips

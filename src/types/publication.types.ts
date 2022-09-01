@@ -1,5 +1,6 @@
 export interface Author {
   name: string
+  publicKey?: string
 }
 
 export interface Institution {

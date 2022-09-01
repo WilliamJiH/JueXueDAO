@@ -6,11 +6,22 @@ import {
 import { NextFunction, Request, Response } from 'express'
 import { validatePublicationMetadata } from '@/utils/asset.validator'
 import { UploadedFile } from 'express-fileupload'
-import assetService from '@/services/asset-service'
+import assetService, { AssetService } from '@/services/asset-service'
+import { NFTMetadata } from '@/db/nft-storage'
+import { Publication } from '@/models/publication'
+import configs from '@configs'
 
 const PUBLICATION_FILE_UPLOAD_NAME = 'publicationFile'
 
 export class PublicationController {
+  async getPublicationNFTStatus(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    next()
+  }
+
   async getAllPublicationNFTs(req: Request, res: Response, next: NextFunction) {
     // Get query
     const { query } = req
@@ -35,27 +46,38 @@ export class PublicationController {
     const publicationFile = req.files[PUBLICATION_FILE_UPLOAD_NAME]
 
     // Verify request inputs for metadata
-    const { metadata } = req.body?.metadata
-      ? JSON.parse(req.body.metadata)
-      : null
-    if (!metadata || !validatePublicationMetadata(metadata)) {
-      throw new InvalidValueException('Metadata is invalid')
-    }
+    let { metadata } = req.body
+    metadata = validatePublicationMetadata(metadata)
 
     // Save to temporary path
-    const filePath = await assetService.storeUploadedFile(
+    const filePath = await AssetService.storeUploadedFile(
       publicationFile as UploadedFile
     )
 
-    console.log({ filePath })
-    // Send to NFTService
+    try {
+      // Send to NFTService
+      console.log({ useNft: configs.useNftStorage === true })
+      const token =
+        // configs.useNftStorage
+        //? await nftService.uploadPublicationPDF(filePath, metadata as NFTMetadata):
+        {
+          ipnft: configs.demoNftCID,
+          url: configs.demoNftURL,
+        }
 
-    // const token = await nftService.uploadPublicationPDF(filePath, metadata)
-    // Store to registry DB
+      // Store an entry to centralized DB
+      const publicationEntryData = { ...metadata, nftToken: token }
+      const databaseEntry = await Publication.create(publicationEntryData)
 
-    // Return token
-    res.locals.data = metadata
-    next()
+      // Return token
+      res.locals.data = { metadata, token, databaseEntry }
+    } catch (err) {
+      throw err
+    } finally {
+      // Remove temporary file from storage
+      AssetService.removeStoredFile(filePath)
+      next()
+    }
   }
 }
 
