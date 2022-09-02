@@ -4,12 +4,12 @@ import {
   InvalidValueException,
 } from '@/types/error.types'
 import { NextFunction, Request, Response } from 'express'
-import { validatePublicationMetadata } from '@/utils/asset.validator'
+import { validatePublicationAssetMetadata } from '@/utils/asset.validator'
 import { UploadedFile } from 'express-fileupload'
 import assetService, { AssetService } from '@/services/asset-service'
 import { INFTMetadata } from '@/db/nft-storage'
 import { Publication, PublicationModel } from '@/models/publication'
-import configs from '@configs'
+import { PublicationService } from '@/services/publication-service'
 
 const PUBLICATION_FILE_UPLOAD_NAME = 'publicationFile'
 
@@ -46,8 +46,7 @@ export class PublicationController {
     const publicationFile = req.files[PUBLICATION_FILE_UPLOAD_NAME]
 
     // Verify request inputs for metadata
-    let { metadata } = req.body
-    metadata = validatePublicationMetadata(metadata)
+    const metadata = validatePublicationAssetMetadata(req.body?.metadata)
 
     // Save to temporary path
     const filePath = await AssetService.storeUploadedFile(
@@ -56,22 +55,19 @@ export class PublicationController {
 
     try {
       // Send to NFTService
-      const token = configs.useNftStorage
-        ? await nftService.uploadPublicationPDF(
-            filePath,
-            metadata as INFTMetadata
-          )
-        : {
-            ipnft: configs.demoNftCID,
-            url: configs.demoNftURL,
-          }
+      const token = await nftService.uploadPublicationPDF(
+        filePath,
+        metadata as INFTMetadata
+      )
 
       // Store an entry to centralized DB
-      const publicationData: PublicationModel = { ...metadata, nftToken: token }
-      const databaseEntry = await Publication.create(publicationData)
+      const dbEntry = PublicationService.createPublicationEntry({
+        ...metadata,
+        nftToken: token,
+      })
 
       // Return token
-      res.locals.data = { metadata, token, databaseEntry }
+      res.locals.data = { metadata, token, dbEntry }
     } catch (err) {
       throw err
     } finally {

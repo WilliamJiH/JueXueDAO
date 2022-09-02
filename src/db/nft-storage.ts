@@ -1,5 +1,5 @@
 // Import the NFTStorage class and File constructor from the 'nft.storage' package
-import { NFTStorage, File, TokenType } from 'nft.storage'
+import { NFTStorage, File } from 'nft.storage'
 
 // The 'mime' npm package helps us set the correct file type on our File objects
 import mime from 'mime'
@@ -7,12 +7,16 @@ import configs from '@configs'
 import path from 'path'
 import fs from 'fs'
 import { IPublicationMetadata } from '../types/publication.types'
+import { CheckResult } from 'nft.storage/dist/src/lib/interface'
+
+export type NftStorageCID = string
+export type NftStorageURL = string
 
 export type NFTProperties = IPublicationMetadata
 
 export interface INftStorageToken {
-  ipnft: string
-  url: string
+  ipnft: NftStorageCID
+  url: NftStorageURL
 }
 
 export interface INFTMetadata {
@@ -42,6 +46,7 @@ export class NftStorage {
   static async getFileFromPath(filePath: string): Promise<File> {
     const content = await fs.promises.readFile(filePath)
     const type = mime.getType(filePath)
+    console.log(`🧲 Extracted file type ${type}`)
     return new File([content], path.basename(filePath), { type })
   }
 
@@ -59,10 +64,44 @@ export class NftStorage {
     }
 
     // call client.store, passing in the image & metadata
-    return this.#api.store(nft)
+    const token = configs.useNftStorage
+      ? await this.#api.store(nft)
+      : {
+          ipnft: configs.demoNftCID,
+          url: configs.demoNftURL,
+        }
+
+    return token
   }
 
-  async retrieveNFT() {}
+  /**
+   * Check if a CID of an NFT is being stored by nft.storage. Throws if the NFT was not found.
+   * @param cid CID of the NFT.
+   * @returns
+   */
+  async checkNFT(cid: NftStorageCID): Promise<{
+    result: CheckResult | null
+    error?: string
+  }> {
+    try {
+      const result = await this.#api.check(cid)
+      return { result }
+    } catch (err) {
+      return { result: null, error: err.message }
+    }
+  }
+
+  /**
+   * Returns current status of the stored NFT by its CID. Note the NFT must have previously been stored by this account.
+   * @param cid CID of the NFT.
+   * @returns
+   */
+  async checkNFTStatus(cid: NftStorageCID) {
+    const status = await this.#api.status(cid)
+    return { status }
+  }
+
+  async retrieveNFT(ipurl: NftStorageURL) {}
 }
 
 const NFTStorageAPI = new NftStorage(configs.nftStorageApiKey)
