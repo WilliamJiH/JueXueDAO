@@ -3,8 +3,8 @@ import { Router } from 'express'
 
 const router = Router()
 
-router.get('/publication', publicationController.getAllPublicationNFTs)
-router.get('/publication/:id', publicationController.getPublicationNFT)
-router.post('/publication', publicationController.createPublicationNFT)
+router.get('/publications', publicationController.getAllPublicationNFTs)
+router.get('/publications/:id', publicationController.getPublicationNFT)
+router.post('/publications', publicationController.createPublicationNFT)
 
 export default router

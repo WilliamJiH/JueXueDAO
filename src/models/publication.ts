@@ -3,6 +3,7 @@ import {
   IAuthor,
   IInstitution,
   IPublicationAsset,
+  IReference,
 } from '@/types/publication.types'
 import { Schema, model, Model, InferSchemaType } from 'mongoose'
 
@@ -20,6 +21,7 @@ export const authorSchema = new Schema<IAuthor>({
     type: String,
     required: true,
   },
+  entryId: Schema.Types.ObjectId,
   publicKey: {
     type: String,
   },
@@ -29,6 +31,13 @@ export const authorSchema = new Schema<IAuthor>({
     address: String,
     institution: institutionSchema,
   },
+})
+
+export const referenceSchema = new Schema<IReference>({
+  url: String,
+  ipnft: String,
+  entryId: Schema.Types.ObjectId,
+  content: { type: String, required: true },
 })
 
 export const publicationSchema = new Schema<IPublicationAsset>({
@@ -45,12 +54,15 @@ export const publicationSchema = new Schema<IPublicationAsset>({
     authors: [authorSchema],
     keywords: [String],
     institution: institutionSchema,
+    references: [referenceSchema],
   },
   nftToken: {
     ipnft: String,
     url: String,
   },
 })
+
+publicationSchema.index({ '$**': 'text' })
 
 export const Publication = model<IPublicationAsset, PublicationModelType>(
   'Publication',

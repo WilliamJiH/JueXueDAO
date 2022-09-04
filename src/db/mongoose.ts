@@ -6,10 +6,12 @@ import configs from '@configs'
 
 /* Connnect to our database */
 const mongoURI = configs.databaseUri
+export let mongooseIsConnected = false
 mongoose
   .connect(mongoURI)
   .then(() => {
     console.log('Connected to database.', mongoURI)
+    mongooseIsConnected = true
   })
   .catch((error) => {
     console.error(error)

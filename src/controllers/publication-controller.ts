@@ -3,10 +3,10 @@ import {
   FileNotUploadedException,
   InvalidValueException,
 } from '@/types/error.types'
-import { NextFunction, Request, Response } from 'express'
+import e, { NextFunction, Request, Response } from 'express'
 import { validatePublicationAssetMetadata } from '@/utils/asset.validator'
 import { UploadedFile } from 'express-fileupload'
-import assetService, { AssetService } from '@/services/asset-service'
+import { AssetService } from '@/services/asset-service'
 import { INFTMetadata } from '@/db/nft-storage'
 import { Publication, PublicationModel } from '@/models/publication'
 import { PublicationService } from '@/services/publication-service'
@@ -14,19 +14,17 @@ import { PublicationService } from '@/services/publication-service'
 const PUBLICATION_FILE_UPLOAD_NAME = 'publicationFile'
 
 export class PublicationController {
-  async getPublicationNFTStatus(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
-    next()
-  }
-
   async getAllPublicationNFTs(req: Request, res: Response, next: NextFunction) {
-    // Get query
-    const { query } = req
-    // Fetch
-    res.locals.data = req
+    const page = Number(req.query.page) || 0
+    const searchText = req.query.searchText
+
+    const data: PublicationModel[] =
+      await PublicationService.getPublicationEntries({
+        searchText: !!searchText && (searchText as string),
+        page,
+      })
+
+    res.locals.data = { searchResult: data }
     next()
   }
 
@@ -34,6 +32,14 @@ export class PublicationController {
     // Get identifier from param
     const { params } = req
     res.locals.data = req
+    next()
+  }
+
+  async getPublicationNFTStatus(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
     next()
   }
 
