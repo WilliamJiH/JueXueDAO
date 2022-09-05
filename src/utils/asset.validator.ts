@@ -23,9 +23,9 @@ const validateNftStorageAsset = (metadata: object) => {
  * @param metadata
  * @returns A validated PublicationAsset object without nftToken.
  */
-export const validatePublicationAssetMetadata = (
+export function validatePublicationAssetMetadata(
   metadata?: object | string
-): INFTMetadata => {
+): INFTMetadata | never {
   if (!metadata) throw new InvalidValueException('Metadata is not given')
 
   const validateProperties = (data: IPublicationMetadata) => {
