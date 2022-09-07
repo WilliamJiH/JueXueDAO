@@ -21,10 +21,7 @@ export const authorSchema = new Schema<IAuthor>({
     type: String,
     required: true,
   },
-  entryId: Schema.Types.ObjectId,
-  publicKey: {
-    type: String,
-  },
+  publicKey: String,
   contacts: {
     email: String,
     phone: String,
@@ -35,31 +32,27 @@ export const authorSchema = new Schema<IAuthor>({
 
 export const referenceSchema = new Schema<IReference>({
   url: String,
-  ipnft: String,
-  entryId: Schema.Types.ObjectId,
+  nftCID: String,
   content: { type: String, required: true },
 })
 
 export const publicationSchema = new Schema<IPublicationAsset>({
-  name: {
+  type: { type: String },
+
+  title: {
     type: String,
     required: true,
   },
-  description: {
-    type: String,
-    required: true,
-  },
-  properties: {
-    type: { type: String },
-    authors: [authorSchema],
-    keywords: [String],
-    institution: institutionSchema,
-    references: [referenceSchema],
-  },
-  nftToken: {
-    ipnft: String,
-    url: String,
-  },
+  abstract: String,
+  keywords: [String],
+  date: { type: Date, default: new Date() },
+
+  authors: [authorSchema],
+  institution: institutionSchema,
+
+  references: [referenceSchema],
+
+  nftCID: String,
 })
 
 publicationSchema.index({ '$**': 'text' })

@@ -8,10 +8,7 @@ router.get(
   '/publications/:entryId',
   publicationController.getPublicationByEntryId
 )
-router.get(
-  '/publications/ipnft/:ipnft',
-  publicationController.getPublicationByCID
-)
+router.get('/publications/cid/:cid', publicationController.getPublicationByCID)
 router.get(
   '/publications/author_address/:authorPublicKey',
   publicationController.getPublicationsByAuthorPublicKey
@@ -29,7 +26,7 @@ router.delete(
 )
 
 router.delete(
-  '/publications/ipnft/:ipnft',
+  '/publications/cid/:cid',
   publicationController.deletePublicationNFTByCID
 )
 

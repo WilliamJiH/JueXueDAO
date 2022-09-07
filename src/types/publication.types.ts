@@ -1,4 +1,4 @@
-import { INFTMetadata, INftStorageToken } from '@/db/nft-storage'
+import { INFTMetadata, INftStorageToken, NftStorageCID } from '@/db/nft-storage'
 import { ObjectId } from 'mongoose'
 import { IContacts } from './user.types'
 /**
@@ -9,7 +9,6 @@ export interface IAuthor {
   name: string
   publicKey?: string
   contacts?: IContacts
-  entryId?: ObjectId
 }
 
 export interface IInstitution {
@@ -17,23 +16,24 @@ export interface IInstitution {
 }
 
 export interface IReference {
-  url: string
-  ipnft: string // cid
-  entryId?: ObjectId
+  url?: string
+  nftCID: string
   content: string
 }
 
 export interface IPublicationMetadata {
   type: 'blog-post' | 'publication'
-  authors: Array<IAuthor>
-  keywords?: Array<string>
+  title: string
   abstract?: string
+  keywords?: Array<string>
   date?: Date
+
+  authors: Array<IAuthor>
   institution?: IInstitution
+
   references?: Array<IReference>
 }
 
-export interface IPublicationAsset extends INFTMetadata {
-  properties: IPublicationMetadata
-  nftToken: INftStorageToken
+export interface IPublicationAsset extends IPublicationMetadata {
+  nftCID: NftStorageCID
 }

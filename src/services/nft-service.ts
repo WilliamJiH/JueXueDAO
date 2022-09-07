@@ -5,11 +5,8 @@ import NFTStorageAPI, {
 } from '@/db/nft-storage'
 
 export class NFTService {
-  public async uploadPublicationPDF(
-    filePath: string,
-    metadata: INFTMetadata
-  ): Promise<NftStorageCID> {
-    return NFTStorageAPI.storeNFT(filePath, metadata)
+  public async uploadPublicationPDF(filePath: string): Promise<NftStorageCID> {
+    return NFTStorageAPI.storeNFT(filePath)
   }
 
   /**

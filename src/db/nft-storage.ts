@@ -15,7 +15,7 @@ export type NftStorageURL = string
 export type NFTProperties = IPublicationMetadata
 
 export interface INftStorageToken {
-  ipnft: NftStorageCID
+  cid: NftStorageCID
   url: NftStorageURL
 }
 
@@ -45,7 +45,6 @@ export class NftStorage {
    */
   static async getFileFromPath(filePath: string): Promise<File> {
     const content = await fs.promises.readFile(filePath)
-    fs.writeFileSync(path.join(path.dirname(filePath), 'tempout.pdf'), content)
     const type = mime.getType(filePath)
     console.log(`🧲 Extracted file type ${type}`)
     return new File([content], path.basename(filePath), { type })
@@ -54,26 +53,14 @@ export class NftStorage {
   /**
    * Reads a file from `filePath` and stores an NFT with the given name and description.
    * @param {string} filePath the temporary path to an image file
-   * @param {string} metadata the metadata for the NFT
    */
-  async storeNFT(filePath: string, metadata: INFTMetadata) {
-    const image = await NftStorage.getFileFromPath(filePath)
+  async storeNFT(filePath: string) {
+    const file = await NftStorage.getFileFromPath(filePath)
 
-    const nft = {
-      image,
-      ...metadata,
-    }
-
-    console.log({ image })
-
-    // call client.store, passing in the image & metadata
+    // call client.store, passing in the file
     const token = configs.useNftStorage
-      ? await this.#api.storeBlob(image) //await this.#api.store(nft)
+      ? await this.#api.storeBlob(file)
       : configs.demoNftCID
-    //  {
-    //     ipnft: configs.demoNftCID,
-    //     url: configs.demoNftURL,
-    //   }
 
     return token
   }
@@ -108,7 +95,9 @@ export class NftStorage {
     return this.#api.delete(cid)
   }
 
-  async retrieveNFT(ipurl: NftStorageURL) {}
+  static getURL(cid: NftStorageCID) {
+    return `https://${cid}.ipfs.nftstorage.link/`
+  }
 }
 
 const NFTStorageAPI = new NftStorage(configs.nftStorageApiKey)

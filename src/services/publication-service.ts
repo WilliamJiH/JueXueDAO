@@ -43,18 +43,18 @@ export class PublicationService {
 
   static async getPublicationEntriesByAuthorName(name: string) {
     return Publication.find({
-      'properties.authors': { $elemMatch: { name } },
+      authors: { $elemMatch: { name } },
     })
   }
 
   static async getPublicationEntriesByAuthorPublicKey(publicKey: string) {
     return Publication.find({
-      'properties.authors': { $elemMatch: { publicKey } },
+      authors: { $elemMatch: { publicKey } },
     })
   }
 
   static async getPublicationEntryByCID(cid: NftStorageCID) {
-    const result = await Publication.findOne({ 'nftToken.ipnft': cid })
+    const result = await Publication.findOne({ nftCID: cid })
     if (!result) throw new ResourceNotFoundException('Publication not Found')
 
     return result

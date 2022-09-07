@@ -6,7 +6,7 @@ const ASSET_FILE_PATH = '/../../temp_files/'
 /**
  * Manage assets that can be stored locally or on cloud.
  */
-export class AssetService {
+export class FileStorageService {
   static getFilePath(
     file: UploadedFile,
     dirPath: string = __dirname + ASSET_FILE_PATH
@@ -14,6 +14,12 @@ export class AssetService {
     return dirPath + file.name
   }
 
+  /**
+   * Store a file to disk.
+   * @param file
+   * @param dirPath
+   * @returns
+   */
   static async storeUploadedFile(
     file: UploadedFile,
     dirPath: string = __dirname + ASSET_FILE_PATH
@@ -24,6 +30,10 @@ export class AssetService {
     return path
   }
 
+  /**
+   * Remove a file from disk.
+   * @param path
+   */
   static removeStoredFile(path: string) {
     fs.unlink(path, (err) => {
       if (err) {
@@ -35,4 +45,4 @@ export class AssetService {
   }
 }
 
-export default new AssetService()
+export default new FileStorageService()

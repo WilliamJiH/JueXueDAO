@@ -1,9 +1,11 @@
 import { InvalidValueException } from '@/types/error.types'
 import { INFTMetadata } from '@/db/nft-storage'
 import { IPublicationMetadata } from '@/types/publication.types'
+import { Asset } from '@/types/asset.types'
 
 /**
  * Check if an object satisfies the required parameters of NFTStorage
+ * @deprecated
  * @param metadata
  * @returns
  */
@@ -25,15 +27,17 @@ const validateNftStorageAsset = (metadata: object) => {
  */
 export function validatePublicationAssetMetadata(
   metadata?: object | string
-): INFTMetadata | never {
+): IPublicationMetadata | never {
   if (!metadata) throw new InvalidValueException('Metadata is not given')
 
-  const validateProperties = (data: IPublicationMetadata) => {
+  const validateProperties = (data: any) => {
+    // TODO:
     return true
   }
 
   let _metadata = metadata
 
+  // Parse _metadata to object
   try {
     // Metadata accepts string or object
     _metadata =
@@ -44,12 +48,11 @@ export function validatePublicationAssetMetadata(
   }
 
   if (
-    !validateNftStorageAsset(_metadata as object) || // Satisfies NftStorage's definition of NFTMetadata
-    !validateProperties((_metadata as INFTMetadata).properties) // Satisfies Properties for a Publication
+    !validateProperties(_metadata) // Satisfies Properties for a Publication
   ) {
     console.log('Invalid metadata (properties): ', { metadata: _metadata })
     throw new InvalidValueException('Metadata is invalid')
   }
 
-  return _metadata as INFTMetadata
+  return _metadata as IPublicationMetadata
 }

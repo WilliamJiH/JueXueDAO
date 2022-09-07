@@ -9,7 +9,7 @@ import {
 import { NextFunction, Request, Response } from 'express'
 import { validatePublicationAssetMetadata } from '@/utils/asset.validator'
 import { UploadedFile } from 'express-fileupload'
-import { AssetService } from '@/services/asset-service'
+import { FileStorageService } from '@/services/fs-service'
 import { INFTMetadata } from '@/db/nft-storage'
 import { Publication, PublicationModel } from '@/models/publication'
 import { PublicationService } from '@/services/publication-service'
@@ -48,9 +48,9 @@ export class PublicationController {
   }
 
   async getPublicationByCID(req: Request, res: Response, next: NextFunction) {
-    const { ipnft } = req.params
+    const { cid } = req.params
 
-    const publication = await PublicationService.getPublicationEntryByCID(ipnft)
+    const publication = await PublicationService.getPublicationEntryByCID(cid)
 
     res.locals.data = { publication }
     next()
@@ -85,27 +85,25 @@ export class PublicationController {
       entryId as unknown as ObjectId
     )
 
-    if (!publication.nftToken?.ipnft)
+    if (!publication.nftCID)
       throw new ResourceNotFoundException(
         'Publication does not have NFT resource',
         404
       )
 
-    res.locals.data = { publication }
-
-    const ipnft = publication.nftToken?.ipnft
-
     // Get nft status from storage
     try {
-      const { result: checkResult } = await nftService.checkNFT(ipnft)
-      res.locals.data.checkResult = checkResult
+      const { result: checkResult } = await nftService.checkNFT(
+        publication.nftCID
+      )
+      res.locals.data = { checkResult }
     } catch (e: any) {
       console.log(e)
       throw new ResourceNotFoundException('NFT Not Found')
     }
 
     // try {
-    //   const { status } = await nftService.checkNFTStatus(ipnft)
+    //   const { status } = await nftService.checkNFTStatus(cid)
     //   res.locals.data.status = status
     // } catch (e: any) {
     //   console.log(e)
@@ -157,32 +155,29 @@ export class PublicationController {
     const metadata = validatePublicationAssetMetadata(req.body?.metadata)
 
     // Save to temporary path
-    const filePath = await AssetService.storeUploadedFile(
+    const filePath = await FileStorageService.storeUploadedFile(
       publicationFile as UploadedFile
     )
 
     try {
-      // Send to NFTService
-      const token = await nftService.uploadPublicationPDF(
-        filePath,
-        metadata as INFTMetadata
-      )
+      // Send to IPFS
+      const nftCID = await nftService.uploadPublicationPDF(filePath)
 
       // Store an entry to centralized DB
       const dbEntry = await PublicationService.createPublicationEntry({
         ...metadata,
-        nftToken: { ipnft: token, url: token },
+        nftCID,
       })
 
       // TODO: Send review request to Contract
 
       // Return token
-      res.locals.data = { metadata, token, dbEntry }
+      res.locals.data = { nftCID, publicationData: dbEntry }
     } catch (err) {
       throw err
     } finally {
       // Remove temporary file from storage
-      AssetService.removeStoredFile(filePath)
+      FileStorageService.removeStoredFile(filePath)
       next()
     }
   }
@@ -214,9 +209,9 @@ export class PublicationController {
     res: Response,
     next: NextFunction
   ) {
-    const { ipnft } = req.params
+    const { cid } = req.params
 
-    const publication = await PublicationService.getPublicationEntryByCID(ipnft)
+    const publication = await PublicationService.getPublicationEntryByCID(cid)
 
     // TODO:
     throw new NotImplementedError()
