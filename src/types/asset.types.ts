@@ -1,3 +1,3 @@
-import { IPublicationAsset } from './publication.types'
+import { IArticleAsset } from './article.types'
 
-export type Asset = IPublicationAsset
+export type Asset = IArticleAsset

@@ -6,13 +6,13 @@ import mime from 'mime'
 import configs from '@configs'
 import path from 'path'
 import fs from 'fs'
-import { IPublicationMetadata } from '../types/publication.types'
+import { IArticleMetadata } from '../types/article.types'
 import { CheckResult } from 'nft.storage/dist/src/lib/interface'
 
 export type NftStorageCID = string
 export type NftStorageURL = string
 
-export type NFTProperties = IPublicationMetadata
+export type NFTProperties = IArticleMetadata
 
 export interface INftStorageToken {
   cid: NftStorageCID

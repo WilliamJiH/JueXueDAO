@@ -2,12 +2,12 @@ import mongoose from '@/db/mongoose'
 import {
   IAuthor,
   IInstitution,
-  IPublicationAsset,
+  IArticleAsset,
   IReference,
-} from '@/types/publication.types'
+} from '@/types/article.types'
 import { Schema, model, Model, InferSchemaType } from 'mongoose'
 
-export type PublicationModelType = Model<IPublicationAsset>
+export type ArticleModelType = Model<IArticleAsset>
 
 export const authorSchema = new Schema<IAuthor>({
   name: {
@@ -22,7 +22,6 @@ export const authorSchema = new Schema<IAuthor>({
     institution: {
       name: {
         type: String,
-        required: true,
       },
     },
   },
@@ -34,7 +33,7 @@ export const referenceSchema = new Schema<IReference>({
   content: { type: String, required: true },
 })
 
-export const publicationSchema = new Schema<IPublicationAsset>({
+export const articleSchema = new Schema<IArticleAsset>({
   type: { type: String },
 
   title: {
@@ -58,11 +57,11 @@ export const publicationSchema = new Schema<IPublicationAsset>({
   nftCID: { type: String, unique: true },
 })
 
-publicationSchema.index({ '$**': 'text' })
+articleSchema.index({ '$**': 'text' })
 
-export const Publication = model<IPublicationAsset, PublicationModelType>(
-  'Publication',
-  publicationSchema
+export const Article = model<IArticleAsset, ArticleModelType>(
+  'Article',
+  articleSchema
 )
 
-export type PublicationModel = InferSchemaType<typeof publicationSchema>
+export type ArticleModel = InferSchemaType<typeof articleSchema>

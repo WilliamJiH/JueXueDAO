@@ -21,8 +21,8 @@ export interface IReference {
   content: string
 }
 
-export interface IPublicationMetadata {
-  type: 'blog-post' | 'publication'
+export interface IArticleMetadata {
+  type: 'blog-post' | 'article'
   title: string
   abstract?: string
   keywords?: Array<string>
@@ -34,6 +34,6 @@ export interface IPublicationMetadata {
   references?: Array<IReference>
 }
 
-export interface IPublicationAsset extends IPublicationMetadata {
+export interface IArticleAsset extends IArticleMetadata {
   nftCID: NftStorageCID
 }

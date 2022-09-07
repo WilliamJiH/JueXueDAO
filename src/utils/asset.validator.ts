@@ -1,6 +1,6 @@
 import { InvalidValueException } from '@/types/error.types'
 import { INFTMetadata } from '@/db/nft-storage'
-import { IPublicationMetadata } from '@/types/publication.types'
+import { IArticleMetadata } from '@/types/article.types'
 import { Asset } from '@/types/asset.types'
 
 /**
@@ -21,13 +21,13 @@ const validateNftStorageAsset = (metadata: object) => {
 }
 
 /**
- * Check if the given data satisfies the required properties of IPublicationAsset.
+ * Check if the given data satisfies the required properties of IArticleAsset.
  * @param metadata
- * @returns A validated PublicationAsset object without nftToken.
+ * @returns A validated ArticleAsset object without nftToken.
  */
-export function validatePublicationAssetMetadata(
+export function validateArticleAssetMetadata(
   metadata?: object | string
-): IPublicationMetadata | never {
+): IArticleMetadata | never {
   if (!metadata) throw new InvalidValueException('Metadata is not given')
 
   const validateProperties = (data: any) => {
@@ -48,11 +48,11 @@ export function validatePublicationAssetMetadata(
   }
 
   if (
-    !validateProperties(_metadata) // Satisfies Properties for a Publication
+    !validateProperties(_metadata) // Satisfies Properties for a Article
   ) {
     console.log('Invalid metadata (properties): ', { metadata: _metadata })
     throw new InvalidValueException('Metadata is invalid')
   }
 
-  return _metadata as IPublicationMetadata
+  return _metadata as IArticleMetadata
 }

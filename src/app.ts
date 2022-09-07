@@ -15,7 +15,7 @@ import { errorHandler } from '@/middlewares/error-handler.interceptor'
 
 // Import routers
 import testRouter from '@/routes/test.api'
-import publicationRouter from '@/routes/publication.api'
+import articlesRouter from '@/routes/articles.api'
 import { FileNotUploadedException } from '@/types/error.types'
 
 class App {
@@ -61,7 +61,7 @@ class App {
 
   routes() {
     this.server.use('/api', testRouter)
-    this.server.use('/api', publicationRouter)
+    this.server.use('/api', articlesRouter)
   }
 }
 
