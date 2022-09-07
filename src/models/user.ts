@@ -1,9 +1,5 @@
 import mongoose from '@/db/mongoose'
-import {
-  IAuthor,
-  IInstitution,
-  IPublicationMetadata,
-} from '@/types/publication.types'
+import { IAuthor, IInstitution, IArticleMetadata } from '@/types/article.types'
 import { IRegisteredScholar, IUser } from '@/types/user.types'
 import { Schema, model, Model, InferSchemaType } from 'mongoose'
 

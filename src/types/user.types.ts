@@ -1,5 +1,5 @@
 import { Asset } from './asset.types'
-import { IInstitution } from './publication.types'
+import { IInstitution } from './article.types'
 
 export interface IUser {
   name: string

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc --project ./",
     "start": "node ./dist/src/index.js",
-    "build-run": "tsc --project ./ && yarn run dev",
+    "build-run": "tsc --project ./ && yarn start",
     "watch": "nodemon -e ts -w ./src -x yarn run start:ts",
     "dev": "nodemon ./src/index.ts",
     "start:ts": "ts-node src/index.ts",
