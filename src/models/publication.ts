@@ -9,13 +9,6 @@ import { Schema, model, Model, InferSchemaType } from 'mongoose'
 
 export type PublicationModelType = Model<IPublicationAsset>
 
-export const institutionSchema = new Schema<IInstitution>({
-  name: {
-    type: String,
-    required: true,
-  },
-})
-
 export const authorSchema = new Schema<IAuthor>({
   name: {
     type: String,
@@ -26,7 +19,12 @@ export const authorSchema = new Schema<IAuthor>({
     email: String,
     phone: String,
     address: String,
-    institution: institutionSchema,
+    institution: {
+      name: {
+        type: String,
+        required: true,
+      },
+    },
   },
 })
 
@@ -48,11 +46,16 @@ export const publicationSchema = new Schema<IPublicationAsset>({
   date: { type: Date, default: new Date() },
 
   authors: [authorSchema],
-  institution: institutionSchema,
+  institution: {
+    name: {
+      type: String,
+      required: true,
+    },
+  },
 
   references: [referenceSchema],
 
-  nftCID: String,
+  nftCID: { type: String, unique: true },
 })
 
 publicationSchema.index({ '$**': 'text' })

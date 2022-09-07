@@ -61,6 +61,10 @@ export class PublicationService {
   }
 
   static async createPublicationEntry(data: IPublicationAsset) {
+    // FIXME:
+    // When a publication comes in,
+    // 1) Search for authors
+    // 2) Search for references
     return Publication.create(data)
   }
 
