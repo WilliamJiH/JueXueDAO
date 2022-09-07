@@ -1,8 +1,10 @@
+import { ServerError } from '@/types/error.types'
 import { Router } from 'express'
+import 'express-async-errors'
 
 const router = Router()
 
-router.get('/test', (req, res, next) => {
+router.get('/test', async (req, res, next) => {
   const data = {
     testResponse: 'Connected!',
     reqBody: req.body,
@@ -14,8 +16,8 @@ router.get('/test', (req, res, next) => {
   next()
 })
 
-router.get('/error', (req, res, next) => {
-  throw new Error('Demo error')
+router.get('/error', async (req, res, next) => {
+  throw new ServerError('Demo throwing error')
 })
 
 export default router
