@@ -45,6 +45,7 @@ export class NftStorage {
    */
   static async getFileFromPath(filePath: string): Promise<File> {
     const content = await fs.promises.readFile(filePath)
+    fs.writeFileSync(path.join(path.dirname(filePath), 'tempout.pdf'), content)
     const type = mime.getType(filePath)
     console.log(`🧲 Extracted file type ${type}`)
     return new File([content], path.basename(filePath), { type })
@@ -63,13 +64,16 @@ export class NftStorage {
       ...metadata,
     }
 
+    console.log({ image })
+
     // call client.store, passing in the image & metadata
     const token = configs.useNftStorage
-      ? await this.#api.store(nft)
-      : {
-          ipnft: configs.demoNftCID,
-          url: configs.demoNftURL,
-        }
+      ? await this.#api.storeBlob(image) //await this.#api.store(nft)
+      : configs.demoNftCID
+    //  {
+    //     ipnft: configs.demoNftCID,
+    //     url: configs.demoNftURL,
+    //   }
 
     return token
   }
@@ -78,17 +82,16 @@ export class NftStorage {
    * Check if a CID of an NFT is being stored by nft.storage. Throws if the NFT was not found.
    * @param cid CID of the NFT.
    * @returns
+   * @throws NotFound error from nft.storage.
    */
-  async checkNFT(cid: NftStorageCID): Promise<{
-    result: CheckResult | null
-    error?: string
-  }> {
-    try {
-      const result = await this.#api.check(cid)
-      return { result }
-    } catch (err) {
-      return { result: null, error: err.message }
-    }
+  async checkNFT(cid: NftStorageCID): Promise<
+    | {
+        result: CheckResult | null
+      }
+    | never
+  > {
+    const result = await this.#api.check(cid)
+    return { result }
   }
 
   /**
@@ -99,6 +102,10 @@ export class NftStorage {
   async checkNFTStatus(cid: NftStorageCID) {
     const status = await this.#api.status(cid)
     return { status }
+  }
+
+  async deleteNFT(cid: NftStorageCID) {
+    return this.#api.delete(cid)
   }
 
   async retrieveNFT(ipurl: NftStorageURL) {}

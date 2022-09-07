@@ -1,4 +1,4 @@
-import nftService from '@/services/nft-service'
+import nftService, { NFTService } from '@/services/nft-service'
 import {
   FileNotUploadedException,
   InvalidIdException,
@@ -91,12 +91,27 @@ export class PublicationController {
         404
       )
 
-    const ipnft = publication.nftToken?.ipnft
-    // Get nft status from storage
-    // TODO:
-    throw new NotImplementedError()
-
     res.locals.data = { publication }
+
+    const ipnft = publication.nftToken?.ipnft
+
+    // Get nft status from storage
+    try {
+      const { result: checkResult } = await nftService.checkNFT(ipnft)
+      res.locals.data.checkResult = checkResult
+    } catch (e: any) {
+      console.log(e)
+      throw new ResourceNotFoundException('NFT Not Found')
+    }
+
+    // try {
+    //   const { status } = await nftService.checkNFTStatus(ipnft)
+    //   res.locals.data.status = status
+    // } catch (e: any) {
+    //   console.log(e)
+    //   throw new ResourceNotFoundException('Cannot Access NFT')
+    // }
+
     next()
   }
 
@@ -154,9 +169,9 @@ export class PublicationController {
       )
 
       // Store an entry to centralized DB
-      const dbEntry = PublicationService.createPublicationEntry({
+      const dbEntry = await PublicationService.createPublicationEntry({
         ...metadata,
-        nftToken: token,
+        nftToken: { ipnft: token, url: token },
       })
 
       // TODO: Send review request to Contract
