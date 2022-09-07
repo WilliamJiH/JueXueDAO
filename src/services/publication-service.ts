@@ -63,6 +63,16 @@ export class PublicationService {
   static async createPublicationEntry(data: IPublicationAsset) {
     return Publication.create(data)
   }
+
+  static async deletePublicationEntry(id: ObjectId) {
+    if (!isValidObjectId(id))
+      throw new InvalidIdException('Given id is invalid')
+
+    const result = await Publication.findByIdAndDelete(id)
+    if (!result) throw new ResourceNotFoundException('Publication not Found')
+
+    return result
+  }
 }
 
 export default new PublicationService()

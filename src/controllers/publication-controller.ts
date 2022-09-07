@@ -10,7 +10,7 @@ import { NextFunction, Request, Response } from 'express'
 import { validatePublicationAssetMetadata } from '@/utils/asset.validator'
 import { UploadedFile } from 'express-fileupload'
 import { FileStorageService } from '@/services/fs-service'
-import { INFTMetadata } from '@/db/nft-storage'
+import { INFTMetadata, NftStorageCID } from '@/db/nft-storage'
 import { Publication, PublicationModel } from '@/models/publication'
 import { PublicationService } from '@/services/publication-service'
 import { ObjectId } from 'mongoose'
@@ -20,13 +20,29 @@ const PUBLICATION_FILE_UPLOAD_NAME = 'publicationFile'
 export class PublicationController {
   async getAllPublications(req: Request, res: Response, next: NextFunction) {
     const page = Number(req.query.page) || 0
-    const searchText = req.query.searchText
 
-    const data: PublicationModel[] =
-      await PublicationService.getPublicationEntries({
+    const { searchText, cid, authorName, authorPublicKey } = req.query
+
+    let data: PublicationModel[]
+
+    if (!!searchText) {
+      data = await PublicationService.getPublicationEntries({
         searchText: !!searchText && (searchText as string),
         page,
       })
+    } else if (cid) {
+      data = [
+        await PublicationService.getPublicationEntryByCID(cid as NftStorageCID),
+      ]
+    } else if (authorName) {
+      data = await PublicationService.getPublicationEntriesByAuthorName(
+        authorName as string
+      )
+    } else if (authorPublicKey) {
+      data = await PublicationService.getPublicationEntriesByAuthorPublicKey(
+        authorPublicKey as string
+      )
+    }
 
     res.locals.data = { searchResult: data }
     next()
@@ -37,37 +53,13 @@ export class PublicationController {
     res: Response,
     next: NextFunction
   ) {
-    const { entryId } = req.params
+    const { entryId } = req.query
 
     const publication = await PublicationService.getPublicationEntryById(
       entryId as unknown as ObjectId
     )
 
     res.locals.data = { publication }
-    next()
-  }
-
-  async getPublicationByCID(req: Request, res: Response, next: NextFunction) {
-    const { cid } = req.params
-
-    const publication = await PublicationService.getPublicationEntryByCID(cid)
-
-    res.locals.data = { publication }
-    next()
-  }
-
-  async getPublicationsByAuthorPublicKey(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
-    const { authorPublicKey } = req.params
-    const publications =
-      await PublicationService.getPublicationEntriesByAuthorPublicKey(
-        authorPublicKey
-      )
-
-    res.locals.data = { publications }
     next()
   }
 
@@ -110,6 +102,23 @@ export class PublicationController {
     //   throw new ResourceNotFoundException('Cannot Access NFT')
     // }
 
+    next()
+  }
+
+  async deletePublicationNFTByEntryID(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const { entryId } = req.params
+
+    const publication = await PublicationService.deletePublicationEntry(
+      entryId as unknown as ObjectId
+    )
+
+    if (publication.nftCID) nftService.deleteNFT(publication.nftCID)
+
+    res.locals.data = { publication }
     next()
   }
 
@@ -191,30 +200,6 @@ export class PublicationController {
     // TODO:
     throw new NotImplementedError()
     next()
-  }
-
-  async deletePublicationNFTByEntryID(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
-    const { entryId } = req.params
-    // TODO:
-    throw new NotImplementedError()
-    next()
-  }
-
-  async deletePublicationNFTByCID(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
-    const { cid } = req.params
-
-    const publication = await PublicationService.getPublicationEntryByCID(cid)
-
-    // TODO:
-    throw new NotImplementedError()
   }
 }
 

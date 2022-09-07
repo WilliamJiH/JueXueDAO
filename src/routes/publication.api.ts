@@ -8,13 +8,8 @@ router.get(
   '/publications/:entryId',
   publicationController.getPublicationByEntryId
 )
-router.get('/publications/cid/:cid', publicationController.getPublicationByCID)
 router.get(
-  '/publications/author_address/:authorPublicKey',
-  publicationController.getPublicationsByAuthorPublicKey
-)
-router.get(
-  '/publications/status/:entryId',
+  '/publications/:entryId/status',
   publicationController.getPublicationNFTStatus
 )
 
@@ -23,11 +18,6 @@ router.post('/publications', publicationController.createPublicationNFT)
 router.delete(
   '/publications/:entryId',
   publicationController.deletePublicationNFTByEntryID
-)
-
-router.delete(
-  '/publications/cid/:cid',
-  publicationController.deletePublicationNFTByCID
 )
 
 export default router
