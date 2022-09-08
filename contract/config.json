@@ -1,0 +1,18 @@
+{
+  "main": "./contracts/ScholarDaoContract.sol",
+  "deploy": "./build/contracts/ScholarDaoContract.json",
+  "framework": "cfxtruffle",
+  "npmClient": "npm",
+  "compilers": {
+    "solc": "0.8.0",
+    "cfxtruffle": "",
+    "evmVersion": "istanbul"
+  },
+  "linter": "solhint",
+  "editor": {
+    "fontFamily": "Hack",
+    "fontSize": "13px",
+    "ligatures": false
+  },
+  "formatSolidity": false
+}
