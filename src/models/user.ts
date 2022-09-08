@@ -4,6 +4,14 @@ import { IRegisteredScholar, IUser } from '@/types/user.types'
 import { Schema, model, Model, InferSchemaType } from 'mongoose'
 
 export type UserModelType = Model<IUser>
+export type ScholarModelType = Model<IRegisteredScholar>
+
+export const institutionSchema = new Schema<IInstitution>({
+  name: {
+    String,
+    required: true,
+  },
+})
 
 export const userSchema = new Schema<IUser>({
   name: {
@@ -15,6 +23,35 @@ export const userSchema = new Schema<IUser>({
   },
 })
 
-export const User = model<IUser, UserModelType>('User', userSchema)
+export const scholarSchema = new Schema<IRegisteredScholar>({
+  name: {
+    type: String,
+    required: true,
+  },
+  publicKey: {
+    type: String,
+    required: true,
+  },
+  contacts: {
+    email: String,
+    phone: String,
+    address: String,
+    institution: institutionSchema,
+  },
+  memberStatus: {
+    type: String,
+    default: 'pending',
+  },
+})
 
-export type UserModel = InferSchemaType<typeof userSchema>
+scholarSchema.index(
+  { publicKey: 1, name: 1, 'contacts.email': 1 },
+  { unique: true }
+)
+
+export const User = model<IUser, UserModelType>('User', userSchema, 'users')
+export const Scholar = model<IRegisteredScholar, ScholarModelType>(
+  'Scholar',
+  scholarSchema,
+  'users'
+)

@@ -6,6 +6,7 @@ import {
   IReference,
 } from '@/types/article.types'
 import { Schema, model, Model, InferSchemaType } from 'mongoose'
+import { institutionSchema, Scholar, User } from './user'
 
 export type ArticleModelType = Model<IArticleAsset>
 
@@ -19,11 +20,7 @@ export const authorSchema = new Schema<IAuthor>({
     email: String,
     phone: String,
     address: String,
-    institution: {
-      name: {
-        type: String,
-      },
-    },
+    institution: institutionSchema,
   },
 })
 
@@ -45,12 +42,7 @@ export const articleSchema = new Schema<IArticleAsset>({
   date: { type: Date, default: new Date() },
 
   authors: [authorSchema],
-  institution: {
-    name: {
-      type: String,
-      required: true,
-    },
-  },
+  institution: institutionSchema,
 
   references: [referenceSchema],
 
@@ -59,9 +51,29 @@ export const articleSchema = new Schema<IArticleAsset>({
 
 articleSchema.index({ '$**': 'text' })
 
+/**
+  Find Authors that have registered.
+*/
+articleSchema.pre('save', async function (next) {
+  const findAuthorPromises = this.authors.map((author) => async () => {
+    const registeredUser = await Scholar.findOne({
+      name: author.name,
+      publicKey: author.publicKey,
+    })
+    return registeredUser || author
+  })
+
+  try {
+    const populatedAuthors = await Promise.all(findAuthorPromises)
+    this.authors = populatedAuthors
+  } catch (e) {
+    console.error(e)
+  } finally {
+    next()
+  }
+})
+
 export const Article = model<IArticleAsset, ArticleModelType>(
   'Article',
   articleSchema
 )
-
-export type ArticleModel = InferSchemaType<typeof articleSchema>

@@ -1,8 +1,6 @@
 import nftService, { NFTService } from '@/services/nft-service'
 import {
   FileNotUploadedException,
-  InvalidIdException,
-  InvalidValueException,
   NotImplementedError,
   ResourceNotFoundException,
 } from '@/types/error.types'
@@ -11,9 +9,8 @@ import { validateArticleAssetMetadata } from '@/utils/asset.validator'
 import { UploadedFile } from 'express-fileupload'
 import { FileStorageService } from '@/services/fs-service'
 import { NftStorageCID } from '@/db/nft-storage'
-import { ArticleModel } from '@/models/article'
 import { ArticleService } from '@/services/article-service'
-import { ObjectId } from 'mongoose'
+import { IArticleAsset } from '@/types/article.types'
 
 const ARTICLE_FILE_UPLOAD_NAME = 'articleFile'
 
@@ -23,7 +20,7 @@ export class ArticleController {
 
     const { searchText, cid, authorName, authorPublicKey } = req.query
 
-    let data: ArticleModel[]
+    let data: IArticleAsset[]
 
     if (cid) {
       data = [await ArticleService.getArticleEntryByCID(cid as NftStorageCID)]
