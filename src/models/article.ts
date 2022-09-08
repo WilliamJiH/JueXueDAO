@@ -1,11 +1,6 @@
 import mongoose from '@/db/mongoose'
-import {
-  IAuthor,
-  IInstitution,
-  IArticleAsset,
-  IReference,
-} from '@/types/article.types'
-import { Schema, model, Model, InferSchemaType } from 'mongoose'
+import { IAuthor, IArticleAsset, IReference } from '@/types/article.types'
+import { Schema, model, Model } from 'mongoose'
 import { institutionSchema, Scholar, User } from './user'
 
 export type ArticleModelType = Model<IArticleAsset>
@@ -29,6 +24,7 @@ export const referenceSchema = new Schema<IReference>({
   nftCID: String,
   content: { type: String, required: true },
 })
+referenceSchema.index({ content: 'text' })
 
 export const articleSchema = new Schema<IArticleAsset>({
   type: { type: String },

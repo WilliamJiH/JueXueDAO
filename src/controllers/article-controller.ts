@@ -11,8 +11,7 @@ import { FileStorageService } from '@/services/fs-service'
 import { NftStorageCID } from '@/db/nft-storage'
 import { ArticleService } from '@/services/article-service'
 import { IArticleAsset } from '@/types/article.types'
-
-const ARTICLE_FILE_UPLOAD_NAME = 'articleFile'
+import { ARTICLE_FILE_UPLOAD_NAME } from '@/constants/api.constants'
 
 export class ArticleController {
   async getAllArticles(req: Request, res: Response, next: NextFunction) {
@@ -158,7 +157,7 @@ export class ArticleController {
         nftCID,
       })
 
-      // TODO: Send review request to Contract
+      // TODO: Send review request to Contract // FIXME: Should be in service
 
       // Return token
       res.locals.data = { nftCID, articleData: dbEntry }

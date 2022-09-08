@@ -1,7 +1,7 @@
 import mongoose from '@/db/mongoose'
-import { IAuthor, IInstitution, IArticleMetadata } from '@/types/article.types'
-import { IRegisteredScholar, IUser } from '@/types/user.types'
-import { Schema, model, Model, InferSchemaType } from 'mongoose'
+import { IAuthor, IInstitution } from '@/types/article.types'
+import { IRegisteredScholar, IUser, memberStatus } from '@/types/user.types'
+import { Schema, model, Model } from 'mongoose'
 
 export type UserModelType = Model<IUser>
 export type ScholarModelType = Model<IRegisteredScholar>
@@ -32,6 +32,7 @@ export const scholarSchema = new Schema<IRegisteredScholar>({
     type: String,
     required: true,
   },
+  description: String,
   contacts: {
     email: String,
     phone: String,
@@ -41,11 +42,12 @@ export const scholarSchema = new Schema<IRegisteredScholar>({
   memberStatus: {
     type: String,
     default: 'pending',
+    enum: ['pending', 'rejected', 'registered'],
   },
 })
 
 scholarSchema.index(
-  { publicKey: 1, name: 1, 'contacts.email': 1 },
+  { publicKey: 1, name: 'text', 'contacts.email': 'text', description: 'text' },
   { unique: true }
 )
 
