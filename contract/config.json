@@ -4,7 +4,7 @@
   "framework": "cfxtruffle",
   "npmClient": "npm",
   "compilers": {
-    "solc": "0.8.0",
+    "solc": "0.8.1",
     "cfxtruffle": "",
     "evmVersion": "istanbul"
   },
