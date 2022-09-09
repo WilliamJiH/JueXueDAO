@@ -1,4 +1,6 @@
+import { UserAccountService } from '@/services/user-account-service'
 import {
+  InvalidValueException,
   NotImplementedError,
   RequirementUnfulfilledException,
 } from '@/types/error.types'
@@ -8,17 +10,15 @@ import { NextFunction, Request, Response } from 'express'
 export class UserAccountController {
   async registerScholar(req: Request, res: Response, next: NextFunction) {
     // Get registration info
-    const { userInfo } = req.body
-    if (!userInfo || typeof userInfo !== 'object')
-      throw new RequirementUnfulfilledException('User Information Not Given')
+    const userInfo = validateUserInfo(req.body?.userInfo)
 
-    if (!validateUserInfo(userInfo)) {
-    }
     // Create user entry
-    // Send review request
+    const scholar = await UserAccountService.createScholarAccount(userInfo)
+    // TODO: Send review request
+
     // Return user entry
-    // TODO:
-    throw new NotImplementedError()
+    res.locals.data = { scholar }
+    next()
   }
 
   async getPendingRegistrations(
@@ -26,8 +26,15 @@ export class UserAccountController {
     res: Response,
     next: NextFunction
   ) {
-    // TODO:
-    throw new NotImplementedError()
+    const page = Number(req.query.page) || 0
+
+    const scholars = await UserAccountService.getScholarsByMemberStatus({
+      page,
+      memberStatus: 'pending',
+    })
+
+    res.locals.data = { scholars }
+    next()
   }
 
   async confirmScholarRegistration(
@@ -35,12 +42,16 @@ export class UserAccountController {
     res: Response,
     next: NextFunction
   ) {
-    // TODO:
-    throw new NotImplementedError()
     // Get scholar
+    const { userId } = req.params
+
     // Update scholar in db
-    // Update DAO contract
-    // Return result
+    const scholar = await UserAccountService.confirmScholarRegistration(userId)
+
+    // TODO: Update DAO contract - in service
+
+    res.locals.data = { scholar }
+    next()
   }
 
   async deleteUserAccount(req: Request, res: Response, next: NextFunction) {

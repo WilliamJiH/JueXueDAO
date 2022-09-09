@@ -18,8 +18,8 @@ export interface IContacts {
 }
 
 export interface IRegisteredScholar extends IUser {
-  description: string
-  contacts: IContacts
+  description?: string
+  contacts?: IContacts
   memberStatus: memberStatus
   // assets: Array<Asset>
 }

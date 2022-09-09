@@ -2,6 +2,7 @@ import { PER_PAGE } from '@/constants/query.constants'
 import { Scholar } from '@/models/user'
 import {
   InvalidIdException,
+  InvalidRequestException,
   ResourceNotFoundException,
 } from '@/types/error.types'
 import { IRegisteredScholar, memberStatus } from '@/types/user.types'
@@ -63,6 +64,11 @@ export class UserAccountService {
   static async confirmScholarRegistration(id: ObjectId | string) {
     if (!isValidObjectId(id))
       throw new InvalidIdException(`Given id ${id} is invalid`)
+
+    const currScholar = await Scholar.findById(id)
+    if (currScholar.memberStatus === 'registered') {
+      throw new InvalidRequestException('User already registered')
+    }
 
     // TODO: Send to Contract
     const result = await Scholar.updateOne(
