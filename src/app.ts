@@ -13,10 +13,12 @@ import mongoose from '@/db/mongoose'
 import { responseInterceptor } from '@/middlewares/response.interceptor'
 import { errorHandler } from '@/middlewares/error-handler.interceptor'
 
+import { FileNotUploadedException } from '@/types/error.types'
+
 // Import routers
 import testRouter from '@/routes/test.api'
 import articlesRouter from '@/routes/articles.api'
-import { FileNotUploadedException } from '@/types/error.types'
+import scholarsRouter from '@/routes/scholars.api'
 
 class App {
   public server
@@ -62,6 +64,7 @@ class App {
   routes() {
     this.server.use('/api', testRouter)
     this.server.use('/api', articlesRouter)
+    this.server.use('/api', scholarsRouter)
   }
 }
 

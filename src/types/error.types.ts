@@ -50,3 +50,4 @@ export class ResourceNotFoundException extends ServerException {
 }
 
 export class InvalidIdException extends ServerException {}
+export class InvalidRequestException extends ServerException {}

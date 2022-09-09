@@ -1,3 +1,34 @@
+import {
+  InvalidValueException,
+  RequirementUnfulfilledException,
+} from '@/types/error.types'
+import { IRegisteredScholar } from '@/types/user.types'
+import _ from 'lodash'
+
 export const validateUserInfo = (user: any) => {
-  return true
+  const validateContacts = (contacts: any): boolean =>
+    Object.keys(contacts).every(
+      (key) =>
+        (['email', 'phone', 'address'].includes(key) &&
+          typeof contacts[key] === 'string') ||
+        (key === 'institution' &&
+          typeof contacts.institution?.name === 'string')
+    )
+
+  if (!user || typeof user !== 'object')
+    throw new RequirementUnfulfilledException('User Information Not Given')
+  // Validate field existence
+  if (
+    // user given fields do not match requirement
+    !!_.difference(Object.keys(user), [
+      'name',
+      'publicKey',
+      'description',
+      'contacts',
+    ]) ||
+    !validateContacts(user.contacts)
+  )
+    throw new InvalidValueException('Invalid fields')
+
+  return { memberStatus: 'pending', ...user } as IRegisteredScholar
 }
