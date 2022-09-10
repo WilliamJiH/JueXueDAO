@@ -71,8 +71,8 @@ contract ScholarDaoContract is ERC1155, Ownable {
 
     constructor() public ERC1155("") {
         // set up assets
-        _uris[SCHOLAR_BRICK] = "SCHOLA_BRICK";
-        _uris[SCHOLAR_SAND] = "SCHOLA_SAND";
+        _uris[SCHOLAR_BRICK] = "SCHOLAR_BRICK";
+        _uris[SCHOLAR_SAND] = "SCHOLAR_SAND";
 
     }
 
