@@ -9,7 +9,6 @@
         </div>
       </div>
     </div>
-    <button v-on:click="setAuth">Set Autho</button>
   </div>
 </template>
 
@@ -19,12 +18,6 @@ export default {
   name: 'LandingPage',
   components: {
     LoginForm,
-  },
-  methods: {
-    setAuth() {
-      this.$emit("setAuthenticated", true);
-      this.$router.replace({ name: "main" });
-    },
   },
 }
 </script>
