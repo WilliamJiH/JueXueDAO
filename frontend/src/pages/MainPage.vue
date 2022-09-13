@@ -44,14 +44,19 @@
         >
       </div>
     </div>
+    <div class="row m-3 mt-5">
+      <div class="col-md-8"><MainContentTable /></div>
+      <div class="col-md-4"></div>
+    </div>
   </div>
 </template>
 
 <script>
 import MainPageCarousel from '../components/MainPageCompo/MainPageCarousel.vue'
+import MainContentTable from '../components/MainPageCompo/MainContentTable.vue'
 export default {
   name: 'MainPage',
-  components: { MainPageCarousel },
+  components: { MainPageCarousel, MainContentTable },
   data() {
     return {
       searchText: '',
