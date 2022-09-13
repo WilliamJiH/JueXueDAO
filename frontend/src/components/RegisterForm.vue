@@ -1,12 +1,46 @@
 <template>
   <div class="container px-0 mt-3">
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-      <b-form-group id="input-group-1" label="电子飞鸽" label-for="input-1">
+      <div class="row p-0">
+        <div class="col-6">
+          <b-form-group id="input-group-1" label="姓氏" label-for="input-1">
+            <b-form-input
+              id="input-1"
+              v-model="form.lastname"
+              type="text"
+              placeholder="姓氏"
+              required
+            ></b-form-input>
+          </b-form-group>
+        </div>
+        <div class="col-6">
+          <b-form-group id="input-group-2" label="名字" label-for="input-1">
+            <b-form-input
+              id="input-2"
+              v-model="form.firstname"
+              type="text"
+              placeholder="名字"
+              required
+            ></b-form-input>
+          </b-form-group>
+        </div>
+      </div>
+
+      <b-form-group id="input-group-3" label="电子飞鸽" label-for="input-3">
         <b-form-input
-          id="input-1"
+          id="input-3"
           v-model="form.email"
           type="email"
           placeholder="您的邮箱"
+          required
+        ></b-form-input>
+      </b-form-group>
+      <b-form-group id="input-group-4" label="电话" label-for="input-4">
+        <b-form-input
+          id="input-4"
+          v-model="form.number"
+          type="number"
+          placeholder="您的电话"
           required
         ></b-form-input>
       </b-form-group>
@@ -22,14 +56,14 @@
       </b-form-group>
 
       <b-button class="login-btn mt-3" type="submit" variant="primary"
-        >登录</b-button
+        >注册编户</b-button
       >
       <div
         class="registration-btn text-center mt-4"
-        v-on:click="$emit('switchToRegister')"
+        v-on:click="$emit('switchToLogin')"
         type="button"
       >
-        注册编户
+        <span style="color: #848989;">已有编户? </span>登入
       </div>
     </b-form>
     <!-- <b-card class="mt-3" header="Form Data Result">
@@ -40,12 +74,15 @@
 
 <script>
 export default {
-  name: 'LoginForm',
+  name: 'RegisterForm',
   data() {
     return {
       form: {
         email: '',
         password: '',
+        lastname: '',
+        firstname: '',
+        number: '',
       },
       show: true,
     }
@@ -53,17 +90,14 @@ export default {
   methods: {
     onSubmit(event) {
       event.preve
-      // 暂时把所有的login 都设成true
-      localStorage.setItem('isAuthenticated', true)
-      localStorage.setItem('user', {})
-      this.$emit('setAuthenticated', true)
-      this.$router.replace({ name: 'main' })
     },
     onReset(event) {
       event.preventDefault()
       // Reset our form values
       this.form.email = ''
       this.form.password = ''
+      this.form.lastname = ''
+      this.form.firstname = ''
       // Trick to reset/clear native browser form validation state
       this.show = false
       this.$nextTick(() => {

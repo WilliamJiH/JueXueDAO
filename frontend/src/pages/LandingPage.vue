@@ -5,7 +5,12 @@
       <div class="col-md-6">
         <div class="container">
           <div class="welcome-caption">愿与初相见，便成故人归</div>
-          <LoginForm v-on="$listeners"/>
+          <LoginForm
+            v-if="!isRegisterForm"
+            @switchToRegister="switchForm"
+            v-on="$listeners"
+          />
+          <RegisterForm v-if="isRegisterForm" @switchToLogin="switchForm"/>
         </div>
       </div>
     </div>
@@ -14,10 +19,23 @@
 
 <script>
 import LoginForm from '../components/LoginForm.vue'
+import RegisterForm from '../components/RegisterForm.vue'
 export default {
   name: 'LandingPage',
   components: {
     LoginForm,
+    RegisterForm,
+  },
+  data() {
+    return {
+      isRegisterForm: false,
+    }
+  },
+  methods: {
+    switchForm() {
+      console.log('switch form')
+      this.isRegisterForm = !this.isRegisterForm
+    },
   },
 }
 </script>
