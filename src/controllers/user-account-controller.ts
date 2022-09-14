@@ -14,7 +14,7 @@ export class UserAccountController {
 
     // Create user entry
     const scholar = await UserAccountService.createScholarAccount(userInfo)
-    // TODO: Send review request
+    // TODOLATER: Send review request
 
     // Return user entry
     res.locals.data = { scholar }

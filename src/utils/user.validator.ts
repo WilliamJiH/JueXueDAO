@@ -5,6 +5,11 @@ import {
 import { IRegisteredScholar } from '@/types/user.types'
 import _ from 'lodash'
 
+/**
+ * Validate input data for a scholar user. Set memberStatus to "pending".
+ * @param user Input user object.
+ * @returns Validated "pending" user object.
+ */
 export const validateUserInfo = (user: any) => {
   const validateContacts = (contacts: any): boolean =>
     Object.keys(contacts).every(
