@@ -55,8 +55,8 @@ contract PaperApprovalContract is Ownable{
 
 contract ScholarDaoContract is ERC1155, Ownable {
     mapping (uint256 => string) private _uris;
-    uint256 public constant SCHOLAR_BRICK = 0;
-    uint256 public constant SCHOLAR_SAND = 1;
+    uint256 public constant SCHOLAR_BRICK = 1;
+    uint256 public constant SCHOLAR_SAND = 2;
 
     mapping (address => bool) public scholarAddresses;
 
@@ -69,10 +69,12 @@ contract ScholarDaoContract is ERC1155, Ownable {
         bool scholarBrickClaimed;
     }
 
-    constructor() public ERC1155("") {
+    constructor() public ERC1155("https://ipfs.io/ipfs/bafybeiey3wz55b2cwphpx24xtmkrnmnhpvs5hduffab2chaclgokbizvhi/{id}.json") {
         // set up assets
-        _uris[SCHOLAR_BRICK] = "SCHOLAR_BRICK";
-        _uris[SCHOLAR_SAND] = "SCHOLAR_SAND";
+        _uris[SCHOLAR_BRICK] = "https://bafkreibqv4acp7efbyggdwimjwaerjoqfpq7nqes77scyxmsshstqchjhy.ipfs.nftstorage.link/";
+        _uris[SCHOLAR_SAND] = "https://bafkreiaq47xvrkoylom7b5i3gh77qxlrzikjjwlrpvxgvquo2at6c7afxa.ipfs.nftstorage.link/";
+        _mint(msg.sender, SCHOLAR_BRICK, 10, "");
+        _mint(msg.sender, SCHOLAR_SAND, 10000, "");
 
     }
 
