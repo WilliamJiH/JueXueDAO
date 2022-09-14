@@ -7,23 +7,35 @@
 
 <script>
 import Navbar from './components/Navbar.vue'
+const { abi: ScholarDaoContractAbi } = require('./contracts/ScholarDaoContract.json')
 export default {
   name: 'App',
   components: {
     Navbar,
   },
   data() {
-    return {
-      
-    }
+    return {}
   },
 
-  mounted() {
+  async mounted() {
     const cfx = this.$store.getters.getCfx
     cfx.provider = window.conflux
     window.conflux.on('chainChanged', cfx.updateNetworkId)
     console.log(this.$store.getters.getDaoContractAddr)
-    
+
+    const daoContract = cfx.Contract({
+      abi: ScholarDaoContractAbi,
+      address: this.$store.getters.getDaoContractAddr,
+    })
+    this.$store.commit('setDaoContract', daoContract)
+
+    // call contract method
+    // const contractName = await daoContract.name();
+    // console.log(contractName)
+    // const scholar = this.$store.getters.getScholarAddr
+    // const balance = await daoContract.balanceOf(scholar);
+    // console.log(balance)
+
     if (!this.$store.getters.getIsAuthenticated && this.$route.path !== '/login') {
       this.$router.replace({ name: 'login' })
     }

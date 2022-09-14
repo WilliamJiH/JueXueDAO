@@ -6,6 +6,7 @@ import LandingPage from '../pages/LandingPage.vue'
 import MainPage from '../pages/MainPage.vue'
 import UploadPage from '../pages/UploadPage.vue'
 import ReviewerApplicationPage from '../pages/ReviewerApplicationPage.vue'
+import UserProfilePage from '../pages/UserProfilePage.vue'
 
 Vue.use(Router)
 export default new Router({
@@ -32,6 +33,11 @@ export default new Router({
     {
       path: '/reviewerApplication',
       component: ReviewerApplicationPage,
-    }
+    },
+    {
+      path: '/userProfile',
+      component: UserProfilePage,
+    },
+
   ],
 })
