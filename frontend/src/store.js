@@ -22,45 +22,36 @@ const store = new Vuex.Store({
   },
   actions: {
     async connectWallet(context) {
+      console.log('trying to connect wallet')
       if (this.state.isAuthenticated) {
         return
       }
       if (!window.conflux) {
         alert('Please install ConfluxPortal')
-        return
+        return false
       }
       try {
-        if (!this.state.scholarAddr) {
-          console.log('requesting account')
-          // connect wallet
-          await window.conflux.request({ method: 'cfx_requestAccounts' })
-          // get accounts
-          const accounts = await window.conflux.request({
-            method: 'cfx_accounts',
-          })
-          console.log(accounts)
-          alert('Wallet connected')
-          const sig = await this.state.cfx.request({
-            method: 'personal_sign',
-            params: [msg, address],
-            from: address,
-          })
-          context.commit('setScholarAddr', accounts[0])
-          alert('Wallet connected')
-          // get scholar info from backend
-          //todo
-        }
+        console.log('requesting account')
+        // connect wallet
+        await window.conflux.request({ method: 'cfx_requestAccounts' })
+        // get accounts
+        const accounts = await window.conflux.request({
+          method: 'cfx_accounts',
+        })
+        console.log(accounts)
+        // const sig = await this.state.cfx.request({
+        //   method: 'personal_sign',
+        //   params: [msg, address],
+        //   from: address,
+        // })
+        context.commit('setScholarAddress', accounts[0])
+        alert('Wallet connected')
+        // get scholar info from backend
+        //todo
+        return true
       } catch (err) {
         console.log(err)
       }
-    },
-    notifyWIP() {
-      eventBus.$emit('App.notifyWIP')
-    },
-
-    notifyLoading(state, payload) {
-      const { msg } = payload
-      eventBus.$emit('App.notifyLoading', msg)
     },
   },
   mutations: {

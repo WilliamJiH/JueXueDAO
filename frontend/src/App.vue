@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar v-if="isAuthenticated" />
+    <Navbar v-if="this.$store.getters.getIsAuthenticated" />
     <router-view @setAuthenticated="setAuthenticated" />
   </div>
 </template>
@@ -14,27 +14,28 @@ export default {
   },
   data() {
     return {
-      isAuthenticated: false,
+      
     }
   },
 
   mounted() {
     const cfx = this.$store.getters.getCfx
     cfx.provider = window.conflux
-    console.log(this.isAuthenticated)
     window.conflux.on('chainChanged', cfx.updateNetworkId)
     console.log(this.$store.getters.getDaoContractAddr)
-    if (!this.isAuthenticated && this.$route.path !== '/login') {
+    
+    if (!this.$store.getters.getIsAuthenticated && this.$route.path !== '/login') {
       this.$router.replace({ name: 'login' })
     }
   },
   methods: {
     setAuthenticated(status) {
-      console.log('set auth', status)
-      this.isAuthenticated = status
+      // set the auth status in the store
+      this.$store.commit('setIsAuthenticated', status)
+      this.$router.replace({ name: 'main' })
     },
     logout() {
-      this.isAuthenticated = false
+      this.$store.commit('setIsAuthenticated', false)
     },
   },
 }

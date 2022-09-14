@@ -1,6 +1,6 @@
 <template>
   <div class="container px-0 mt-3">
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+    <b-form v-if="show">
       <b-form-group id="input-group-1" label="电子飞鸽" label-for="input-1">
         <b-form-input
           id="input-1"
@@ -21,9 +21,10 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button class="login-btn mt-3" type="submit" variant="primary"
+      <b-button class="login-btn mt-3" v-on:click="login" variant="primary"
         >登录</b-button
       >
+
       <div
         class="registration-btn text-center mt-4"
         v-on:click="$emit('switchToRegister')"
@@ -51,14 +52,13 @@ export default {
     }
   },
   methods: {
-    onSubmit(event) {
+    async login(event) {
       event.preve
       // 暂时把所有的login 都设成true
-      localStorage.setItem('isAuthenticated', true)
-      localStorage.setItem('user', {})
-      this.$store.dispatch("connectWallet");
-      this.$emit('setAuthenticated', true)
-      this.$router.replace({ name: 'main' })
+      const result = await this.$store.dispatch('connectWallet')
+      console.log('connect wallet result', result)
+      this.$emit('setAuthenticated', result)
+
     },
     onReset(event) {
       event.preventDefault()
@@ -71,6 +71,7 @@ export default {
         this.show = true
       })
     },
+
   },
 }
 </script>
