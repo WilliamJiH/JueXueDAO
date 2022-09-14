@@ -15,7 +15,8 @@ const store = new Vuex.Store({
     scholarAddr: undefined,
     backendUrl: 'http://localhost:5000/api',
     platformAddr: 'cfxtest:aane51nxnydk7azb4bz14t2rfacbckp572xa9cur87',
-    daoContractAddr: 'cfxtest:acdrykf83s32v1s3wkwz3h7jgf7zeyf3kpgs623mxt',
+    daoContractAddr: 'cfxtest:acfg1y2j1etc48krz4g1wyu841kdymwf6jy3vs7ren',
+    daoContract: undefined,
     lang: 'en',
     isAuthenticated: false,
     gasPrice: 1e9,
@@ -64,6 +65,9 @@ const store = new Vuex.Store({
     setIsAuthenticated: (state, isAuthenticated) => {
       state.isAuthenticated = isAuthenticated
     },
+    setDaoContract: (state, daoContract) => {
+      state.daoContract = daoContract
+    },
   },
   getters: {
     getCfx: (state) => state.cfx,
@@ -72,6 +76,7 @@ const store = new Vuex.Store({
     getBackendUrl: (state) => state.backendUrl,
     getDaoContractAddr: (state) => state.daoContractAddr,
     getlang: (state) => state.lang,
+    getDaoContract: (state) => state.daoContract,
   },
 })
 
