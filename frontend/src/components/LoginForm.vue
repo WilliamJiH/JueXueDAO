@@ -56,6 +56,7 @@ export default {
       // 暂时把所有的login 都设成true
       localStorage.setItem('isAuthenticated', true)
       localStorage.setItem('user', {})
+      this.$store.dispatch("connectWallet");
       this.$emit('setAuthenticated', true)
       this.$router.replace({ name: 'main' })
     },

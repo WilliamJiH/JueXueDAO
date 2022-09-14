@@ -19,16 +19,18 @@ export default {
   },
 
   mounted() {
-    
+    const cfx = this.$store.getters.getCfx
+    cfx.provider = window.conflux
     console.log(this.isAuthenticated)
+    window.conflux.on('chainChanged', cfx.updateNetworkId)
+    console.log(this.$store.getters.getDaoContractAddr)
     if (!this.isAuthenticated && this.$route.path !== '/login') {
       this.$router.replace({ name: 'login' })
     }
-    
   },
   methods: {
     setAuthenticated(status) {
-      console.log("set auth", status)
+      console.log('set auth', status)
       this.isAuthenticated = status
     },
     logout() {
