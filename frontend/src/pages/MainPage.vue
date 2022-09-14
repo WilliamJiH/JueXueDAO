@@ -42,6 +42,7 @@
         <b-button
           variant="primary"
           style="height: 30%; font-size: 1.5rem; font-weight: 400"
+          v-on:click="reviewerApply"
           >成为审稿人</b-button
         >
       </div>
@@ -75,6 +76,9 @@ export default {
   methods: {
     upload() {
       this.$router.push('/upload')
+    },
+    reviewerApply() {
+      this.$router.push('/reviewerApplication')
     },
   },
 }
