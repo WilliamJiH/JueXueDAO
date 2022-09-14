@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import HomePage from '../pages/HomePage.vue'
 import LandingPage from '../pages/LandingPage.vue'
 import MainPage from '../pages/MainPage.vue'
+import UploadPage from '../pages/UploadPage.vue'
 
 Vue.use(Router)
 export default new Router({
@@ -23,5 +24,9 @@ export default new Router({
       path: '/home',
       component: HomePage,
     },
+    {
+      path: '/upload',
+      component: UploadPage,
+    }
   ],
 })

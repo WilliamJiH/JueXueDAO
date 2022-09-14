@@ -32,11 +32,13 @@
           justify-content: space-around;
         "
       >
+        <!-- redirection button to upload page -->
         <b-button
           variant="primary"
           style="height: 40%; font-size: 2rem; font-weight: 600"
-          >投稿</b-button
-        >
+          v-on:click="upload"
+          >投稿
+        </b-button>
         <b-button
           variant="primary"
           style="height: 30%; font-size: 1.5rem; font-weight: 400"
@@ -69,6 +71,11 @@ export default {
         { text: '图书', value: 'tushu' },
       ],
     }
+  },
+  methods: {
+    upload() {
+      this.$router.push('/upload')
+    },
   },
 }
 </script>

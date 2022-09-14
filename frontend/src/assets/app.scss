@@ -1,7 +1,9 @@
 // Define variable defaults
 $primary: #10BEA9;
-$secondary: #0c4e4e;
-
+$secondary: #086257;
+.navbar-dark .navbar-nav .nav-link {
+    color: rgb(255, 255, 255);
+}
 // Then import Bootstrap and BootstrapVue SCSS files (order is important)
 @import '/node_modules/bootstrap/scss/bootstrap.scss';
 @import '/node_modules/bootstrap-vue/src/index.scss';
