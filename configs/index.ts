@@ -16,4 +16,8 @@ export default {
   useNftStorage: process.env.USE_NFT_STORAGE === 'true',
   demoNftURL: process.env.DEMO_NFT_URL || 'ipfs://demonfturl/metadata.json',
   demoNftCID: process.env.DEMO_NFT_CID || 'demonftcid',
+
+  cfxManagerAddress: process.env.CFX_MANAGER_ADDR,
+  cfxManagerKey: process.env.CFX_MANAGER_KEY,
+  scholarDaoContractAddress: process.env.SCHOLAR_DAO_CONTRACT_ADDR,
 }

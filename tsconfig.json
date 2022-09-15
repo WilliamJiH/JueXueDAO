@@ -11,11 +11,9 @@
     "esModuleInterop": true,
     "paths": {
       "@/*": ["src/*"],
-      "@configs": ["configs"]
+      "@configs": ["configs"],
+      "@contracts/*": ["contract/build/contracts/*"]
     }
   },
-  "include": [
-    "src/**/*",
-    "configs"
-  ]
+  "include": ["src/**/*", "configs"]
 }
