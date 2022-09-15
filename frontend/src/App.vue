@@ -2,16 +2,21 @@
   <div id="app">
     <Navbar v-if="this.$store.getters.getIsAuthenticated" />
     <router-view @setAuthenticated="setAuthenticated" />
+    <Footer />
   </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue'
-const { abi: ScholarDaoContractAbi } = require('./contracts/ScholarDaoContract.json')
+import Footer from './components/Footer.vue'
+const {
+  abi: ScholarDaoContractAbi,
+} = require('./contracts/ScholarDaoContract.json')
 export default {
   name: 'App',
   components: {
     Navbar,
+    Footer,
   },
   data() {
     return {}
@@ -36,7 +41,10 @@ export default {
     // const balance = await daoContract.balanceOf(scholar);
     // console.log(balance)
 
-    if (!this.$store.getters.getIsAuthenticated && this.$route.path !== '/login') {
+    if (
+      !this.$store.getters.getIsAuthenticated &&
+      this.$route.path !== '/login'
+    ) {
       this.$router.replace({ name: 'login' })
     }
   },
