@@ -192,6 +192,12 @@
                       这个提议好！
                     </div>
                   </li>
+                  <li class="clearfix" v-if="newContent !== ''">
+                    <div class="message-data text-left"></div>
+                    <div class="message my-message float-right">
+                      {{ newContent }}
+                    </div>
+                  </li>
                 </ul>
               </div>
               <div class="chat-message clearfix">
@@ -204,7 +210,10 @@
                   <input
                     type="text"
                     class="form-control"
+                    v-model="msg"
+                    v-on:keyup.enter="onEnter"
                     placeholder="Enter text here..."
+                    ref="textInput"
                   />
                 </div>
               </div>
@@ -219,6 +228,20 @@
 <script>
 export default {
   name: 'ForumPage',
+  data() {
+    return {
+      newContent: '',
+      msg: '',
+    }
+  },
+  methods: {
+    onEnter: function () {
+      this.newContent = this.msg;
+      this.$refs["textInput"].value = '';
+      this.msg = '';
+      console.log(this.$refs["textInput"])
+    },
+  },
 }
 </script>
 
