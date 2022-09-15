@@ -11,7 +11,7 @@ import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
 const {
   abi: ScholarDaoContractAbi,
-} = require('./contracts/ScholarDaoContract.json')
+} = require('./assets/ScholarDaoContract.json')
 export default {
   name: 'App',
   components: {

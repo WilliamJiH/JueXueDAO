@@ -19,7 +19,7 @@
             <div
               class="title"
               style="font-size: 0.9rem; font-weight: 900; letter-spacing: 1px"
-              v-on:click="switchPdf(review.pdfPath, review.title, index)"
+              v-on:click="switchPdf(index)"
             >
               {{ review.title }}
             </div>
@@ -38,12 +38,31 @@
       <div class="col-md-9">
         <PDFJSViewer :path="`${pdfFile.path}`" :fileName="`${pdfFile.name}`" />
         <div class="text-center m-3">
-          <div class="m-3">文章合约地址：{{ reviewArticles[article_index].address }}</div>
+          <div class="m-3">
+            文章合约地址：{{ reviewArticles[article_index].address }}
+          </div>
           <b-button
             style="padding: 0.5rem 2rem; font-size: 1.2rem; font-weight: 800"
+            v-b-modal.modal-1
           >
             投票
           </b-button>
+          <b-modal id="modal-1" hide-footer title="投票选择" ref="vote-modal">
+            <div class="d-flex m-5" style="justify-content: space-between">
+              <b-button
+                class="vote-btn"
+                variant="danger"
+                v-on:click="submitVote"
+                >回退</b-button
+              >
+              <b-button
+                class="vote-btn"
+                variant="success"
+                v-on:click="submitVote"
+                >通过</b-button
+              >
+            </div>
+          </b-modal>
         </div>
       </div>
     </div>
@@ -82,13 +101,20 @@ export default {
     }
   },
   methods: {
-    getImgUrl(imgSrc) {
-      return require(imgSrc)
-    },
-    switchPdf(pdfPath, pdfName, index) {
-      this.pdfFile.path = pdfPath
-      this.pdfFile.name = pdfName
+    switchPdf(index) {
+      this.pdfFile.path = this.reviewArticles[index].pdfPath
+      this.pdfFile.name = this.reviewArticles[index].title
       this.article_index = index
+    },
+
+    async submitVote() {
+      const getters = this.$store.getter
+      this.$refs['vote-modal'].hide()
+      // for demo only
+      //remove the first element in reviewArticles
+      this.reviewArticles.shift()
+      this.pdfFile.path = this.reviewArticles[0].pdfPath
+      this.pdfFile.name = this.reviewArticles[0].title
     },
   },
 }
@@ -101,5 +127,10 @@ export default {
   overflow: hidden;
   margin-bottom: 0.5rem;
   padding: 15px 5px;
+}
+
+.vote-btn {
+  font-size: 1.5rem;
+  padding: 0.5rem 1.5rem;
 }
 </style>
