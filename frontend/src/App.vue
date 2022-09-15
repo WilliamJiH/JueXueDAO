@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="text-font">
     <Navbar v-if="this.$store.getters.getIsAuthenticated" />
     <router-view @setAuthenticated="setAuthenticated" />
     <Footer />
@@ -63,10 +63,16 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, Gilroy, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+
+.text-font {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
 }
 
 body {

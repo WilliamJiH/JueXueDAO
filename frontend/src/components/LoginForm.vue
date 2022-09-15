@@ -58,7 +58,6 @@ export default {
       const result = await this.$store.dispatch('connectWallet')
       console.log('connect wallet result', result)
       this.$emit('setAuthenticated', result)
-
     },
     onReset(event) {
       event.preventDefault()
@@ -71,7 +70,6 @@ export default {
         this.show = true
       })
     },
-
   },
 }
 </script>
