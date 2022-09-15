@@ -19,7 +19,7 @@
             <div
               class="title"
               style="font-size: 0.9rem; font-weight: 900; letter-spacing: 1px"
-              v-on:click="switchPdf(review.pdfPath, review.title)"
+              v-on:click="switchPdf(review.pdfPath, review.title, index)"
             >
               {{ review.title }}
             </div>
@@ -38,6 +38,7 @@
       <div class="col-md-9">
         <PDFJSViewer :path="`${pdfFile.path}`" :fileName="`${pdfFile.name}`" />
         <div class="text-center m-3">
+          <div class="m-3">文章合约地址：{{ reviewArticles[article_index].address }}</div>
           <b-button
             style="padding: 0.5rem 2rem; font-size: 1.2rem; font-weight: 800"
           >
@@ -58,6 +59,7 @@ export default {
   },
   data() {
     return {
+      article_index: 0,
       reviewArticles: [
         {
           title: '绝学Dao- 去中心化组织是否能改变学术研究的现状',
@@ -70,7 +72,7 @@ export default {
         {
           title: '用量子计算机解决先有鸡还是先有蛋的问题',
           author: '小小本科生',
-          address: 'cfxtest:aar0e79969taycse290egbwrvu3ha5fmcj70bk62a4',
+          address: 'cfxtest:aar0e79969taycse290egbabsu3ha5f8540bk62a4',
           image: 'images/user_article3.png',
           date: '2021-05-01',
           pdfPath: '用量子计算机解决先有鸡还是先有蛋的问题.pdf',
@@ -83,9 +85,10 @@ export default {
     getImgUrl(imgSrc) {
       return require(imgSrc)
     },
-    switchPdf(pdfPath, pdfName) {
+    switchPdf(pdfPath, pdfName, index) {
       this.pdfFile.path = pdfPath
       this.pdfFile.name = pdfName
+      this.article_index = index
     },
   },
 }
