@@ -10,7 +10,7 @@
         <b-nav-item v-bind:to="'upload'">投稿中心</b-nav-item>
       </b-navbar-nav>
        <b-navbar-nav>
-        <b-nav-item v-bind:to="'upload'">论坛</b-nav-item>
+        <b-nav-item v-bind:to="'forum'">论坛</b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav>
         <b-nav-item v-bind:to="'review'">审核</b-nav-item>
