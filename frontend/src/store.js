@@ -15,7 +15,7 @@ const store = new Vuex.Store({
     scholarAddr: undefined,
     backendUrl: 'http://localhost:5000/api',
     platformAddr: 'cfxtest:aane51nxnydk7azb4bz14t2rfacbckp572xa9cur87',
-    daoContractAddr: 'cfxtest:acfg1y2j1etc48krz4g1wyu841kdymwf6jy3vs7ren',
+    daoContractAddr: 'cfxtest:accjxyknf6y073ey668reamfs5ukrh61d2rx731hak',
     daoContract: undefined,
     lang: 'en',
     isAuthenticated: false,

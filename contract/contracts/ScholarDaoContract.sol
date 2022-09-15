@@ -44,21 +44,19 @@ contract PaperApprovalContract is Ownable{
     }
 
     function checkVotingStatus() public view returns(uint _totalVotes, uint _approvalCounts, bool _contractIsClosed){
-        if (approvalCounts > (totalVotes / 2)) {
-            contractIsClosed = true;
-        }
         return(totalVotes, approvalCounts, contractIsClosed);
     }
 
     function isContractClaimable() public view returns(bool){
         return contractIsClosed && (approvalCounts > (totalVotes / 2));
     }
+
 }
 
 contract ScholarDaoContract is ERC1155, Ownable {
     mapping (uint256 => string) private _uris;
-    uint256 public constant SCHOLAR_BRICK = 1;
-    uint256 public constant SCHOLAR_SAND = 2;
+    uint256 public constant SCHOLAR_BRICK = 0;
+    uint256 public constant SCHOLAR_SAND = 1;
 
     mapping (address => bool) public scholarAddresses;
 
@@ -71,10 +69,8 @@ contract ScholarDaoContract is ERC1155, Ownable {
         bool scholarBrickClaimed;
     }
 
-    constructor() public ERC1155("https://ipfs.io/ipfs/bafybeiey3wz55b2cwphpx24xtmkrnmnhpvs5hduffab2chaclgokbizvhi/{id}.json") {
+    constructor() public ERC1155("https://bafybeie5qutyv6qqjfzdcdyxk4tjgoothyc2dm2zokji2nz33t54qqili4.ipfs.nftstorage.link/{id}.json") {
         // set up assets
-        _uris[SCHOLAR_BRICK] = "https://bafkreibqv4acp7efbyggdwimjwaerjoqfpq7nqes77scyxmsshstqchjhy.ipfs.nftstorage.link/";
-        _uris[SCHOLAR_SAND] = "https://bafkreiaq47xvrkoylom7b5i3gh77qxlrzikjjwlrpvxgvquo2at6c7afxa.ipfs.nftstorage.link/";
         _mint(msg.sender, SCHOLAR_BRICK, 10, "");
         _mint(msg.sender, SCHOLAR_SAND, 10000, "");
 

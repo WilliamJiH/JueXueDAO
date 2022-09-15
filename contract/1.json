@@ -1,9 +1,7 @@
-{ //1.
-
-    "name": "SCHOLAR_BRICK",
-
-    "description": "This is a representation of a Scholar Brick.",
-
-    "image": "ipfs://bafkreibqv4acp7efbyggdwimjwaerjoqfpq7nqes77scyxmsshstqchjhy"
+{
+	"id": 1,
+	"name": "SCHOLAR_SAND",
+	"description": "This is a representation of a Scholar Sand.",
+	"image": "https://bafkreiaq47xvrkoylom7b5i3gh77qxlrzikjjwlrpvxgvquo2at6c7afxa.ipfs.nftstorage.link/"
 
 }
