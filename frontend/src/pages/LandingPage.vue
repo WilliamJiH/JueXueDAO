@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row" style="height: 100vh; align-content: center">
-      <div class="col-md-6 landing-caption my-3">知网贵，天下苦知网久矣</div>
+      <div class="col-md-6 landing-caption my-3">往圣继绝学 为万世开太平</div>
       <div class="col-md-6">
         <div class="container">
           <div class="welcome-caption">愿与初相见，便成故人归</div>
