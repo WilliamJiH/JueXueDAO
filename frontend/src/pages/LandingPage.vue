@@ -1,7 +1,16 @@
 <template>
-  <div>
+  <div class="landing-page">
     <div class="row" style="height: 100vh; align-content: center">
-      <div class="col-md-6 landing-caption my-3">往圣继绝学 为万世开太平</div>
+      <div class="col-md-6 landing-caption my-3">
+        <div style="position: relative">
+          往圣继绝学 为万世开太平
+          <img
+            src="../assets/images/landing.png"
+            alt=""
+            style="position: absolute; left: -20rem; top: -2rem; z-index: -1"
+          />
+        </div>
+      </div>
       <div class="col-md-6">
         <div class="container">
           <div class="welcome-caption">愿与初相见，便成故人归</div>
@@ -10,7 +19,7 @@
             @switchToRegister="switchForm"
             v-on="$listeners"
           />
-          <RegisterForm v-if="isRegisterForm" @switchToLogin="switchForm"/>
+          <RegisterForm v-if="isRegisterForm" @switchToLogin="switchForm" />
         </div>
       </div>
     </div>
