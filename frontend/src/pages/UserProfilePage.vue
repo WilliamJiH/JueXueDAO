@@ -101,6 +101,12 @@ export default {
           status: 'failed',
         },
         {
+          title: '绝学Dao- 去中心化组织是否能改变学术研究的现状',
+          address: 'cfxtest:aar0e79969taycse290egbwrvu3ha5fmcj70bk62a4',
+          date: '2021-05-01',
+          status: 'progress',
+        },
+        {
           title: '用量子计算机解决先有鸡还是先有蛋的问题',
           address: 'cfxtest:aar0e79969taycse290egbwrvu3ha5fmcj70bk62a4',
           date: '2021-05-01',

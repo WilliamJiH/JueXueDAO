@@ -12,6 +12,9 @@
        <b-navbar-nav>
         <b-nav-item v-bind:to="'upload'">论坛</b-nav-item>
       </b-navbar-nav>
+      <b-navbar-nav>
+        <b-nav-item v-bind:to="'review'">审核</b-nav-item>
+      </b-navbar-nav>
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
