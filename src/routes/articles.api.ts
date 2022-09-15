@@ -6,6 +6,10 @@ const router = Router()
 router.get('/articles', articleController.getAllArticles)
 router.get('/articles/:entryId', articleController.getArticleByEntryId)
 router.get('/articles/:entryId/status', articleController.getArticleNFTStatus)
+router.get(
+  '/articles/:entryId/review-status',
+  articleController.getArticleReviewStatus
+)
 
 router.post('/articles', articleController.createArticleNFT)
 

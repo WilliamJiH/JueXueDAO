@@ -43,6 +43,21 @@ export const articleSchema = new Schema<IArticleAsset>({
   references: [referenceSchema],
 
   nftCID: { type: String, unique: true },
+
+  reviewContractAddress: {
+    type: String,
+    unique: true,
+  },
+  reviewStatus: {
+    type: String,
+    enum: ['approved', 'rejected', 'pending'],
+    default: 'pending',
+  },
+  votingStats: {
+    totalVotes: Number,
+    approvalCounts: Number,
+    contractIsClosed: Boolean,
+  },
 })
 
 articleSchema.index({ '$**': 'text' })

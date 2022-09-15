@@ -10,8 +10,9 @@ import { UploadedFile } from 'express-fileupload'
 import { FileStorageService } from '@/services/fs-service'
 import { NftStorageCID } from '@/db/nft-storage'
 import { ArticleService } from '@/services/article-service'
-import { IArticleAsset } from '@/types/article.types'
+import { IArticleAsset, ReviewStatus } from '@/types/article.types'
 import { ARTICLE_FILE_UPLOAD_NAME } from '@/constants/api.constants'
+import ArticleReviewContractService from '@/services/article-review-contract-service'
 
 export class ArticleController {
   async getAllArticles(req: Request, res: Response, next: NextFunction) {
@@ -116,15 +117,43 @@ export class ArticleController {
     // Get Article review status from DB
     const article = await ArticleService.getArticleEntryById(entryId as string)
 
-    // TODO:
-    throw new NotImplementedError()
-    // if DB shows pending
-    // Get Article review status from Contract
-    // Update Article review status in DB
-
     // if DB has status result
     // Return result
+    if (article.reviewStatus !== 'pending') {
+      res.locals.data = {
+        reviewStatus: article.reviewStatus,
+        votingStats: article.votingStats,
+        reviewContractAddress: article.reviewContractAddress,
+      }
+      next()
+    }
 
+    // if DB shows pending
+    // Get Article review status from Contract
+    const reviewContractService = new ArticleReviewContractService(
+      article.reviewContractAddress
+    )
+    const votingStats = await reviewContractService.getReviewStatus()
+
+    // Update Article review status in DB
+    let newStatus: ReviewStatus = 'pending'
+
+    if (votingStats.contractIsClosed) {
+      const isApproved = await reviewContractService.isApproved()
+      newStatus = isApproved ? 'approved' : 'rejected'
+    }
+
+    ArticleService.updateArticleReview({
+      id: entryId as string,
+      reviewStatus: newStatus,
+      votingStats,
+    })
+
+    res.locals.data = {
+      reviewStatus: newStatus,
+      votingStats,
+      reviewContractAddress: article.reviewContractAddress,
+    }
     next()
   }
 
@@ -151,13 +180,11 @@ export class ArticleController {
       // Send to IPFS
       const nftCID = await nftService.uploadArticlePDF(filePath)
 
-      // Store an entry to centralized DB
+      // Store an entry to centralized DB and create a PaperApprovalContract
       const dbEntry = await ArticleService.createArticleEntry({
         ...metadata,
         nftCID,
       })
-
-      // TODO: Send review request to Contract // FIXME: Should be in service
 
       // Return token
       res.locals.data = { nftCID, articleData: dbEntry }

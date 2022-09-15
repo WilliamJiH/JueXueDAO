@@ -7,6 +7,7 @@ import {
 } from '@/types/error.types'
 import { IRegisteredScholar, memberStatus } from '@/types/user.types'
 import { isValidObjectId, ObjectId } from 'mongoose'
+import { ScholarDaoContractService } from './scholar-dao-contract-service'
 
 export class UserAccountService {
   static async createScholarAccount(data: IRegisteredScholar) {
@@ -70,7 +71,9 @@ export class UserAccountService {
       throw new InvalidRequestException('User already registered')
     }
 
-    // TODO: Send to Contract
+    // Send to Contract
+    await ScholarDaoContractService.registerScholarToDAO(currScholar.publicKey)
+
     const result = await Scholar.updateOne(
       { _id: id },
       { memberStatus: 'registered' }

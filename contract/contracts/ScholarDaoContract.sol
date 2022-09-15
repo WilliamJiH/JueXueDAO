@@ -44,13 +44,15 @@ contract PaperApprovalContract is Ownable{
     }
 
     function checkVotingStatus() public view returns(uint _totalVotes, uint _approvalCounts, bool _contractIsClosed){
+        if (approvalCounts > (totalVotes / 2)) {
+            contractIsClosed = true;
+        }
         return(totalVotes, approvalCounts, contractIsClosed);
     }
 
     function isContractClaimable() public view returns(bool){
         return contractIsClosed && (approvalCounts > (totalVotes / 2));
     }
-
 }
 
 contract ScholarDaoContract is ERC1155, Ownable {

@@ -1,13 +1,16 @@
 import { INFTMetadata, INftStorageToken, NftStorageCID } from '@/db/nft-storage'
 import { ObjectId } from 'mongoose'
+import { ArticleVotingStats, PublicAddress } from './contract.types'
 import { IContacts } from './user.types'
+
+export type ReviewStatus = 'approved' | 'rejected' | 'pending'
 /**
  * An Author differentiates from a User as an author may not be
  * a user of the DAO app.
  */
 export interface IAuthor {
   name: string
-  publicKey?: string
+  publicKey?: PublicAddress
   contacts?: IContacts
 }
 
@@ -17,7 +20,7 @@ export interface IInstitution {
 
 export interface IReference {
   url?: string
-  nftCID: string
+  nftCID: NftStorageCID
   content: string
 }
 
@@ -36,4 +39,7 @@ export interface IArticleMetadata {
 
 export interface IArticleAsset extends IArticleMetadata {
   nftCID: NftStorageCID
+  reviewContractAddress?: PublicAddress
+  reviewStatus?: ReviewStatus
+  votingStats?: ArticleVotingStats
 }

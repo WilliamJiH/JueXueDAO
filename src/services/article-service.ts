@@ -2,11 +2,14 @@ import { NftStorageCID } from '@/db/nft-storage'
 import { Article } from '@/models/article'
 import {
   InvalidIdException,
+  InvalidValueException,
   ResourceNotFoundException,
 } from '@/types/error.types'
-import { IArticleAsset } from '@/types/article.types'
+import { IArticleAsset, ReviewStatus } from '@/types/article.types'
 import { isValidObjectId, ObjectId } from 'mongoose'
 import { PER_PAGE } from '@/constants/query.constants'
+import { ScholarDaoContractService } from './scholar-dao-contract-service'
+import { ArticleVotingStats } from '@/types/contract.types'
 
 export class ArticleService {
   static async getArticleEntryById(id: ObjectId | string) {
@@ -81,7 +84,12 @@ export class ArticleService {
     // When a article comes in,
     // 1) Search for authors - DONE
     // 2) Search for references
-    return Article.create(data)
+    const reviewContractAddress =
+      await ScholarDaoContractService.createReviewRequestContract(data)
+
+    const article = await Article.create({ ...data, reviewContractAddress })
+
+    return article
   }
 
   static async deleteArticleEntry(id: ObjectId | string) {
@@ -92,6 +100,21 @@ export class ArticleService {
     if (!result) throw new ResourceNotFoundException('Article not Found')
 
     return result
+  }
+
+  static async updateArticleReview({
+    id,
+    votingStats,
+    reviewStatus,
+  }: {
+    id: ObjectId | string
+    votingStats: ArticleVotingStats
+    reviewStatus: ReviewStatus
+  }) {
+    if (!isValidObjectId(id))
+      throw new InvalidIdException(`Given id ${id} is invalid`)
+
+    return Article.updateOne({ _id: id }, { votingStats, reviewStatus })
   }
 
   /**

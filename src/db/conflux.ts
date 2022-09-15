@@ -2,6 +2,7 @@ import configs from '@configs'
 import { Conflux } from 'js-conflux-sdk'
 import { abi as scholarDaoAbi } from '@contracts/ScholarDaoContract.json'
 import { abi as articleReviewAbi } from '@contracts/PaperApprovalContract.json'
+import { IScholarDaoContract } from '@/types/contract.types'
 
 export const cfx = new Conflux({
   url: 'https://test.confluxrpc.com',
@@ -11,7 +12,7 @@ export const cfx = new Conflux({
 
 export const CfxManager = cfx.wallet.addPrivateKey(configs.cfxManagerKey)
 
-export const ScholarDaoContract = cfx.Contract({
+export const ScholarDaoContract: IScholarDaoContract = cfx.Contract({
   abi: scholarDaoAbi,
   address: configs.scholarDaoContractAddress,
 })

@@ -1,5 +1,6 @@
 import { Asset } from './asset.types'
 import { IInstitution } from './article.types'
+import { PublicAddress } from './contract.types'
 
 export type memberStatus = 'pending' | 'rejected' | 'registered'
 // | 'quitted'
@@ -7,7 +8,7 @@ export type memberStatus = 'pending' | 'rejected' | 'registered'
 
 export interface IUser {
   name: string
-  publicKey: string
+  publicKey: PublicAddress
 }
 
 export interface IContacts {

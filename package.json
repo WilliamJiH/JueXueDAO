@@ -7,7 +7,10 @@
         "build": "tsc --project ./",
         "lint": "vue-cli-service lint",
         "dev": "nodemon ./src/index.ts",
-        "start": "node ./src/index.ts"
+        "start": "node ./src/index.ts",
+        "build-run": "tsc --project ./ && yarn start",
+        "start:ts": "ts-node src/index.ts",
+        "clean": "rmdir -r dist"
     },
     "dependencies": {
         "@types/mongoose": "^5.11.97",
