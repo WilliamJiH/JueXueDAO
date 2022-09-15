@@ -142,4 +142,6 @@ export default {
 .recommand-card-content {
   font-size: 0.8rem;
 }
+
+
 </style>

@@ -95,4 +95,14 @@ export default {
   font-size: 1rem;
   color: #616161;
 }
+
+.content-card-description::-webkit-scrollbar {
+  width: 3px;
+}
+.content-card-description::-webkit-scrollbar-track {
+  background-color: rgb(255, 255, 255);
+}
+.content-card-description::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px #086257;
+}
 </style>
