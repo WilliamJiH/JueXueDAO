@@ -22,7 +22,7 @@
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
           <template #button-content>
-            <em>User</em>
+            <em><i class="fa-regular fa-user"></i></em>
           </template>
           <b-dropdown-item v-bind:to="'/userProfile'">Profile</b-dropdown-item>
           <b-dropdown-item href="/login">Sign Out</b-dropdown-item>
