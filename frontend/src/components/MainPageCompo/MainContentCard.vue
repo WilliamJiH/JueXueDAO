@@ -1,15 +1,26 @@
 <template>
   <div class="content-card-container mt-3">
-    <img class="card-img" v-if="imgSrc !== ''" :src="imgSrc" alt="" />
-    <img
-      class="card-img"
-      v-else
-      src="https://www.lighthouselabs.ca/uploads/post/open_graph_image/459/Coding-vs-programming.jpg"
-      alt=""
-    />
+    <b-link :to="'/article'">
+      <img
+        class="card-img"
+        v-if="imgSrc !== ''"
+        :src="require(`@/assets/${imgSrc}`)"
+        alt=""
+      />
+
+      <img
+        class="card-img"
+        v-else
+        src="https://www.lighthouselabs.ca/uploads/post/open_graph_image/459/Coding-vs-programming.jpg"
+        alt=""
+      />
+    </b-link>
     <div class="text-content px-4">
       <div class="content-card-category">{{ category }}</div>
-      <div class="content-card-title">{{ title }}</div>
+      <b-link :to="'/article'">
+        <div class="content-card-title">{{ title }}</div></b-link
+      >
+
       <div class="content-card-authors">
         <ul style="padding-left: 0px; margin-bottom: 0.3rem">
           <li
@@ -42,6 +53,7 @@ export default {
     category: String,
     desc: String,
     imgSrc: String,
+    address: String,
   },
 }
 </script>
@@ -68,6 +80,7 @@ export default {
 
 .content-card-title {
   font-weight: 900;
+  color: #191919;
   font-size: 1.2rem;
 }
 

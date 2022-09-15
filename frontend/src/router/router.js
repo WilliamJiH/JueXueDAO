@@ -8,6 +8,7 @@ import UploadPage from '../pages/UploadPage.vue'
 import ReviewerApplicationPage from '../pages/ReviewerApplicationPage.vue'
 import UserProfilePage from '../pages/UserProfilePage.vue'
 import ReviewPage from '../pages/ReviewPage.vue'
+import ArticlePage from '../pages/ArticlePage.vue'
 
 Vue.use(Router)
 export default new Router({
@@ -42,7 +43,15 @@ export default new Router({
     {
       path: '/review',
       component: ReviewPage,
-    }
+    },
+    {
+      path: '/article',
+      component: ArticlePage,
+    },
+    // {
+    //   path: '/article/:address',
+    //   component: ArticlePage,
+    // },
 
   ],
 })
