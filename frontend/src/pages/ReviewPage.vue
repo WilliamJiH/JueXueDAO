@@ -108,13 +108,25 @@ export default {
     },
 
     async submitVote() {
-      const getters = this.$store.getter
+      const getters = this.$store.getters
       this.$refs['vote-modal'].hide()
       // for demo only
       //remove the first element in reviewArticles
       this.reviewArticles.shift()
       this.pdfFile.path = this.reviewArticles[0].pdfPath
       this.pdfFile.name = this.reviewArticles[0].title
+      const Jux = {
+        title: '绝学Dao- 去中心化组织是否能改变学术研究的现状',
+        authors: ['小小本科生'],
+        date: '2021-05-01',
+        category: '计算机科学',
+        desc: '绝学dao',
+        imgSrc: 'images/user_article4.png',
+        address: 'cfxtest:aar0e79969taycse290egbwrvu3ha5fmcj70bk62a4',
+      }
+      let x = getters.getCards
+      x.push(Jux)
+      this.$store.commit('setCards', x)
     },
   },
 }

@@ -46,10 +46,7 @@
           >
             <div class="form-title-with-btn">
               <div>其他作者</div>
-              <b-button
-                class="check-address-btn"
-                v-on:click="upload"
-                variant="primary"
+              <b-button class="check-address-btn" variant="primary"
                 >查看作者</b-button
               >
             </div>
@@ -69,7 +66,7 @@
             v-model="form.image"
             type="file"
             placeholder="图片"
-             accept="image/*"
+            accept="image/*"
           ></b-form-file>
         </b-form-group>
 
@@ -93,10 +90,7 @@
         >
           <div class="form-title-with-btn">
             <div>添加引用文章</div>
-            <b-button
-              class="check-address-btn"
-              v-on:click="upload"
-              variant="primary"
+            <b-button class="check-address-btn" variant="primary"
               >查看引用文章</b-button
             >
           </div>
@@ -128,6 +122,8 @@
 </template>
 
 <script>
+import { Notification } from 'element-ui'
+
 export default {
   name: 'UploadPage',
   data() {
@@ -153,6 +149,12 @@ export default {
   methods: {
     upload() {
       console.log(this.form)
+      this.$notify({
+        title: '通知',
+        message: '审核合约创建成功',
+        duration: 3000,
+        type: 'success',
+      })
     },
   },
 }
