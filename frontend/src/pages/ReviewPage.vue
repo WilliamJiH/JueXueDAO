@@ -120,7 +120,7 @@ export default {
         authors: ['小小本科生'],
         date: '2021-05-01',
         category: '计算机科学',
-        desc: '绝学dao',
+        desc: '绝学dao 的核心，就是给知识赋值。等知识有价值之后，学术研究就可以有收益。而我们给知识赋值的方式则是通过智能合约来进行。那先让我们讲一下有关于知识的几个点。知识的传播，免费。知识的引用，收费。',
         imgSrc: 'images/user_article4.png',
         address: 'cfxtest:aar0e79969taycse290egbwrvu3ha5fmcj70bk62a4',
       }

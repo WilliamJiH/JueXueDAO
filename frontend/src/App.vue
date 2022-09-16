@@ -32,11 +32,12 @@ export default {
       abi: ScholarDaoContractAbi,
       address: this.$store.getters.getDaoContractAddr,
     })
+    console.log(daoContract)
     this.$store.commit('setDaoContract', daoContract)
 
     // call contract method
-    // const contractName = await daoContract.name();
-    // console.log(contractName)
+    const contractName = await daoContract.owner();
+    console.log("Contract_owner: ", contractName)
     // const scholar = this.$store.getters.getScholarAddr
     // const balance = await daoContract.balanceOf(scholar);
     // console.log(balance)

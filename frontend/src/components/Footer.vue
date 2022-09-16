@@ -105,4 +105,10 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.row{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+</style>
