@@ -72,6 +72,9 @@
 <script>
 import PDFJSViewer from '@/components/PDFJSViewer'
 import { Notification } from 'element-ui'
+const {
+  abi: PaperApprovalContractAbi,
+} = require('../assets/PaperApprovalContract.json')
 
 export default {
   name: 'ReviewPage',
@@ -111,7 +114,15 @@ export default {
 
     async submitVote() {
       const getters = this.$store.getters
-      this.$refs['vote-modal'].hide()
+      const cfx = getters.getCfx
+      const tempPaperAddress = "cfxtest:acdk8af9k12hwfx7m6u6mmrhc5b18s2rtpm0nb5mw1"
+      const paperReviewContract = cfx.Contract({
+        abi: PaperApprovalContractAbi,
+        address: tempPaperAddress,
+      })
+      
+      
+      
       // for demo only
       //remove the first element in reviewArticles
       this.reviewArticles.shift()
@@ -131,6 +142,12 @@ export default {
       x.push(Jux)
       this.$store.commit('setCards', x)
 
+      // call contract
+      console.log(paperReviewContract)
+      // const result = await paperReviewContract.commitVote(true);
+      // console.log(result)
+
+      this.$refs['vote-modal'].hide()
       Notification.closeAll()
       this.$notify({
         title: '通知',
