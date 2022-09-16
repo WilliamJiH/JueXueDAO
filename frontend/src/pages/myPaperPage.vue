@@ -14,13 +14,39 @@
             >
               {{ review.title }}
             </div>
-            <div class="d-flex" style="justify-content: space-between">
-              <div style="font-size: 0.8rem; color: #0000007a">
+            <div
+              class="d-flex"
+              v-if="review.status === '已领取'"
+              style="justify-content: space-between"
+            >
+              <div style="font-size: 0.8rem; color: rgb(16 119 190)">
                 绝学价值: {{ review.value }}
               </div>
             </div>
-            <div style="font-size: 0.8rem; color: #10bea9">
-              {{ review.receive }}
+
+            <div
+              v-if="review.status === '未领取'"
+              style="font-size: 0.8rem; color: rgb(190 120 16)"
+            >
+              {{ review.status }}
+            </div>
+            <div
+              v-else-if="review.status === '已领取'"
+              style="font-size: 0.8rem; color: #10bea9"
+            >
+              {{ review.status }}
+            </div>
+            <div
+              v-else-if="review.status === '审核中'"
+              style="font-size: 0.8rem; color: #ffc107"
+            >
+              {{ review.status }}
+            </div>
+            <div
+              v-else-if="review.status === '审核失败'"
+              style="font-size: 0.8rem; color: rgb(190 16 16)"
+            >
+              {{ review.status }}
             </div>
           </div>
         </div>
@@ -39,56 +65,40 @@ export default {
       reviewArticles: [
         {
           title: '绝学Dao- 去中心化组织是否能改变学术研究的现状',
-          value: '0.2',
-          receive: '未领取',
+          value: '',
+          status: '审核中',
         },
         {
           title: '用量子计算机解决先有鸡还是先有蛋的问题',
-          value: '0.6',
-          receive: '已领取',
-        },
-        {
-          title: '分手后想追回来怎么办?分手后老想着复合怎么办?',
-          value: '0.3',
-          receive: '已领取',
-        },
-        {
-          title: '自己冲动提了分手，又想挽回！?',
-          value: '0.5',
-          image: 'images/user_article3.png',
-          receive: '未领取',
-        },
-        {
-          title:
-            '如何减轻我给前女友造成的分手痛苦并如有可能在未来重新追回她呢？',
-          value: '0.7',
-          receive: '已领取',
-        },
-        {
-          title: '为什么自己提出分手后又想挽回？',
-          value: '0.4',
-          receive: '未领取',
-        },
-        {
-          title: '分手几个月后，还是喜欢心中放不下，如何再追回？',
-          value: '0.3',
-          receive: '已领取',
-        },
-        {
-          title:
-            '做不成朋友的分手情侣，为什么彼此害怕相见？为什么分手之后不能做朋友？不做恋人做好朋友啊~',
-          value: '0.5',
-          receive: '已领取',
+          value: '',
+          status: '审核中',
         },
         {
           title: '分手后应该绝交么？',
-          value: '0.1',
-          receive: '已领取',
+          value: '',
+          status: '未领取',
         },
         {
+          title: '在图书馆喝奶茶学习能否提高学习效率',
+          value: '1 绝学砖块, 5绝学砂砾',
+          status: '已领取',
+        },
+
+        {
           title: '有没有分手之后，两个人作为朋友依然在一起的？',
-          value: '0.9',
-          receive: '未领取',
+          value: '1 绝学砖块, 20绝学砂砾',
+          status: '已领取',
+        },
+        {
+          title: '如何在分手后保持友谊？',
+          value: '1 绝学砖块, 25绝学砂砾',
+          status: '审核中',
+        },
+
+        {
+          title: 'Copilot 图像计算与应用',
+          value: '',
+          status: '审核失败',
         },
       ],
     }
