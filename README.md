@@ -1,10 +1,25 @@
-# JueXue DAO App
+
+<div align="center">
+<h1>
+    JueXue DAO App
+</h1>
+</div>
 
 ## About
 
+JueXue DAO App is a web application relying on the Conflux Blockchain for supporting and facilitating the development of JueXue DAO.
+
+This is a hackathon project created by a group of four students from the University of Toronto.
+
 ### JueXue DAO
 
-// TODO: 
+*JueXue DAO* is a **decentralized academic open source dao community** that serves the scholars.
+
+***Decentralization***: We assign *value* to *knowledge* through *smart contracts*. Decentralization can protect intellectual property rights of scholars and scholars can benefit from smart contracts when they create documents.
+
+***Academic Open Source***: Our platform does not rely on readers' subscription fees to generate revenue, so all academic articles on our platform can be read and browsed for free. Make the dissemination of knowledge easier.
+
+***DAO Community***: Different from many DAO communities which centered on financial commodities, our core is to help scholars create more valuable literature. Members of the community can vote on platform rules, exchange learning, and access academic resources provided by the platform.
 
 ### Conflux - BeiDou Program
 
@@ -41,7 +56,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
 yarn
 ```
 
-#### Run in Development Environment
+#### Running Server in Development Environment
 
 - Ask for `.env` and put under project root directory.
 
