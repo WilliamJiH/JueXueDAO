@@ -18,6 +18,8 @@ export interface IScholarDaoContract {
 }
 
 export interface IPaperApprovalContract {
-  checkVotingStatus: () => Promise<ArticleVotingStats>
+  checkVotingStatus: () => Promise<
+    [totalVotes: number, approvalCounts: number, contractIsClosed: boolean]
+  >
   isContractClaimable: () => Promise<boolean>
 }

@@ -1,5 +1,9 @@
 import { ARTICLE_REVIEW_CONTRACT_ABI, cfx } from '@/db/conflux'
-import { IPaperApprovalContract, PublicAddress } from '@/types/contract.types'
+import {
+  ArticleVotingStats,
+  IPaperApprovalContract,
+  PublicAddress,
+} from '@/types/contract.types'
 
 export default class ArticleReviewContractService {
   #contract: IPaperApprovalContract
@@ -12,7 +16,13 @@ export default class ArticleReviewContractService {
   }
 
   async getReviewStatus() {
-    return this.#contract.checkVotingStatus()
+    const [totalVotes, approvalCounts, contractIsClosed] =
+      await this.#contract.checkVotingStatus()
+    return {
+      totalVotes,
+      approvalCounts,
+      contractIsClosed,
+    } as ArticleVotingStats
   }
 
   async isApproved() {
