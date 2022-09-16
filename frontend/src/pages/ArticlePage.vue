@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-12 bg-white p-0 px-2 pb-3 mb-3">
             <div class="d-flex justify-content-between border-bottom py-2 px-3">
-              <div class="author-name">{{article.authors[0]}}</div>
+              <div class="author-name">{{ article.authors[0] }}</div>
               <img
                 class="profile-icon"
                 src="../assets/images/profile_pic1.jpg"
@@ -13,7 +13,7 @@
               />
             </div>
             <div class="d-flex justify-content-between border-bottom py-2 px-3">
-              <div class="article-title">{{article.title}}</div>
+              <div class="article-title">{{ article.title }}</div>
             </div>
             <div class="d-flex justify-content-between border-bottom py-2 px-3">
               <p><span class="fab fa-github-alt me-2"></span>文章获得</p>
@@ -26,7 +26,6 @@
             </div>
           </div>
         </div>
-
       </div>
 
       <div class="col-md-9">
@@ -54,12 +53,18 @@ export default {
         category: '社会心理',
         desc: '',
         content: '',
-        },
+      },
     }
   },
   mounted() {
-    this.pdfFile.path = '在图书馆喝奶茶学习能否提高学习效率.pdf'
-    this.pdfFile.name = '在图书馆喝奶茶学习能否提高学习效率.pdf'
+    let last = this.$store.getters.getCards.at(-1)
+    console.log(last)
+    this.article = last
+    this.pdfFile.path = last.pdfPath
+    this.pdfFile.name = last.title
+
+    console.log(this.pdfFile)
+
     // this.address = this.$route.query.address
   },
 }
@@ -84,9 +89,8 @@ p {
 }
 
 .article-title {
-font-family: 'Noto Serif SC';
-    font-size: 1rem;
-    font-weight: 800;
-  
+  font-family: 'Noto Serif SC';
+  font-size: 1rem;
+  font-weight: 800;
 }
 </style>

@@ -16,7 +16,7 @@
           <b-nav-item v-bind:to="'review'">审核</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav>
-          <b-nav-item v-bind:to="'paper'">我的文稿</b-nav-item>
+          <b-nav-item v-bind:to="'userArticleCenter'">我的文稿</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->

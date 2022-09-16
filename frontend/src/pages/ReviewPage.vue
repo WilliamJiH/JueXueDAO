@@ -71,6 +71,8 @@
 
 <script>
 import PDFJSViewer from '@/components/PDFJSViewer'
+import { Notification } from 'element-ui'
+
 export default {
   name: 'ReviewPage',
   components: {
@@ -123,10 +125,19 @@ export default {
         desc: '绝学dao 的核心，就是给知识赋值。等知识有价值之后，学术研究就可以有收益。而我们给知识赋值的方式则是通过智能合约来进行。那先让我们讲一下有关于知识的几个点。知识的传播，免费。知识的引用，收费。',
         imgSrc: 'images/user_article4.png',
         address: 'cfxtest:aar0e79969taycse290egbwrvu3ha5fmcj70bk62a4',
+        pdfPath: '绝学dao.pdf',
       }
       let x = getters.getCards
       x.push(Jux)
       this.$store.commit('setCards', x)
+
+      Notification.closeAll()
+      this.$notify({
+        title: '通知',
+        message: '投票结果已提交',
+        duration: 3000,
+        type: 'success',
+      })
     },
   },
 }

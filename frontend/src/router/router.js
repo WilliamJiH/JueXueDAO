@@ -10,7 +10,7 @@ import UserProfilePage from '../pages/UserProfilePage.vue'
 import ReviewPage from '../pages/ReviewPage.vue'
 import ArticlePage from '../pages/ArticlePage.vue'
 import ForumPage from '../pages/ForumPage.vue'
-import myPaperPage from '../pages/myPaperPage.vue'
+import paperPage from '../pages/paperPage.vue'
 
 Vue.use(Router)
 export default new Router({
@@ -51,8 +51,8 @@ export default new Router({
       component: ArticlePage,
     },
     {
-      path: '/paper',
-      component: myPaperPage,
+      path: '/userArticleCenter',
+      component: paperPage,
     },
     // {
     //   path: '/article/:address',

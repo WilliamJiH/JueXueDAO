@@ -47,6 +47,7 @@ const store = new Vuex.Store({
         desc: '在平均每天只睡七个小时以下的大学生活里, 我们在考final期间, 平均睡眠基本不到六个小时。在强行突破被窝的封印之后, 艰难地来到图书馆，却总也集中不了精神。在面对那些刷不完的题目, 记不完的重点里, 奶茶简直就是大号血瓶，喝一口仿佛就能帮我们脉动回来！那么接下来我们将会探讨一下奶茶的成分。',
         imgSrc: 'images/user_article1.png',
         address: 'cfxtest:aane51nxnydk7azb4bz14t2rfacbckp572xa9cur87',
+        pdfPath: '在图书馆喝奶茶学习能否提高学习效率.pdf',
       },
     ],
   },
