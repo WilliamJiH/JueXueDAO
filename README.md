@@ -1,22 +1,22 @@
 
 <div align="center">
 <h1>
-    JueXue DAO App
+    JueXue DAO
 </h1>
 
 ![GitHub language count](https://img.shields.io/github/languages/count/WilliamJiH/JueXueDAO)
 ![GitHub top language](https://img.shields.io/github/languages/top/WilliamJiH/JueXueDAO?color=42b883)
 ![GitHub issues](https://img.shields.io/github/issues/WilliamJiH/JueXueDAO)
-
 ![Contributors](https://img.shields.io/github/contributors/WilliamJiH/JueXueDAO)
 ![GitHub Repo stars](https://img.shields.io/github/stars/WilliamJiH/JueXueDAO?style=social)
+
 </div>
 
 ## About
 
-JueXue DAO App is a web application relying on the Conflux Blockchain for supporting and facilitating the development of JueXue DAO.
+JueXue DAO is a web application relying on the Conflux Blockchain for supporting and facilitating the development.
 
-This is a hackathon project created by a group of four students from the University of Toronto.
+This is a hackathon project created by a group of 4 students from the University of Toronto.
 
 ### JueXue DAO
 
