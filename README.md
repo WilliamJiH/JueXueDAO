@@ -83,3 +83,9 @@ yarn start
 netstat -ano | findstr 3000
 taskkill /F /PID 4176
 ```
+
+## License
+
+This codebase is distributed under **GPL v3 license**.
+
+See [LICENSE](LICENSE) for more information.
