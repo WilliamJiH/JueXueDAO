@@ -3,9 +3,9 @@
 <h1>
     JueXue DAO App
 </h1>
-![Language Count](https://img.shields.io/github/languages/count/WilliamJiH/JueXueDAO)
-![Top Language Portion](https://img.shields.io/github/languages/top/WilliamJiH/JueXueDAO)
-![Issues](https://img.shields.io/github/issues/WilliamJiH/JueXueDAO)
+![GitHub language count](https://img.shields.io/github/languages/count/WilliamJiH/JueXueDAO)
+![GitHub top language](https://img.shields.io/github/languages/top/WilliamJiH/JueXueDAO)
+![GitHub issues](https://img.shields.io/github/issues/WilliamJiH/JueXueDAO)
 
 ![Contributors](https://img.shields.io/github/contributors/WilliamJiH/JueXueDAO)
 ![GitHub Repo stars](https://img.shields.io/github/stars/WilliamJiH/JueXueDAO?style=social)
