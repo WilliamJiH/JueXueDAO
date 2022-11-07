@@ -3,6 +3,7 @@
 <h1>
     JueXue DAO App
 </h1>
+
 ![GitHub language count](https://img.shields.io/github/languages/count/WilliamJiH/JueXueDAO)
 ![GitHub top language](https://img.shields.io/github/languages/top/WilliamJiH/JueXueDAO?color=42b883)
 ![GitHub issues](https://img.shields.io/github/issues/WilliamJiH/JueXueDAO)
